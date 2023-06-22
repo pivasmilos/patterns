@@ -1,3 +1,3 @@
 import { ShapesApplication } from "./ShapesApplication";
 
-ShapesApplication.run();
+new ShapesApplication().run();

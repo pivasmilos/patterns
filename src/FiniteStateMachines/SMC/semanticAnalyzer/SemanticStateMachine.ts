@@ -4,9 +4,9 @@ import { Comparable } from "./Comparable";
 export class SemanticStateMachine {
   public errors: AnalysisError[] = [];
   public warnings: AnalysisError[] = [];
-  public states: Map<string, SemanticState> = new Map();
-  public events: Set<string> = new Set();
-  public actions: Set<string> = new Set();
+  public states = new Map<string, SemanticState>();
+  public events = new Set<string>();
+  public actions = new Set<string>();
   public initialState: SemanticState | null = null;
   public actionClass: string | null = null;
   public fsmName: string | null = null;
@@ -37,7 +37,7 @@ export class SemanticState implements Comparable<SemanticState> {
   public entryActions: string[] = [];
   public exitActions: string[] = [];
   public isAbstractState = false;
-  public superStates: Set<SemanticState> = new Set();
+  public superStates = new Set<SemanticState>();
   public transitions: SemanticTransition[] = [];
 
   public constructor(name: string) {

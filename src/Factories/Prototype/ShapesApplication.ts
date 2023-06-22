@@ -1,12 +1,12 @@
 import { ShapePrototype } from "./ShapePrototype";
-import { ShapePrototypesLibrary } from "./ShapePrototypesLibrary";
+import { circlePrototype, squarePrototype } from "./ShapePrototypesLibrary";
 
 export class ShapesApplication {
-  public static run(): void {
+  public run(): void {
     const shapes: ShapePrototype[] = [];
 
-    shapes.push(ShapePrototypesLibrary.circlePrototype.clone());
-    shapes.push(ShapePrototypesLibrary.squarePrototype.clone());
+    shapes.push(circlePrototype.clone());
+    shapes.push(squarePrototype.clone());
 
     // TODO extract into a CompositeShape class
     for (const shape of shapes) {

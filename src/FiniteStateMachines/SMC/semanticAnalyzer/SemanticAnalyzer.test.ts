@@ -28,11 +28,6 @@ describe("SemanticAnalyzer", () => {
     return analyzer.analyze(builder.getFsm());
   };
 
-  // const assertSemanticResult = (s: string, expected: string): void => {
-  //   const semanticStateMachine = produceAst(s);
-  //   expect(toString()).toEqual(expected);
-  // };
-
   describe("SemanticErrors", () => {
     describe("HeaderErrors", () => {
       it("should report errors when no headers are present", () => {

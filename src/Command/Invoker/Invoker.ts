@@ -24,7 +24,7 @@ export class Invoker implements Command {
    * Notice that Invoker itself can be a command object.
    */
   public execute(): void {
-    if (!this?.commands) {
+    if (!this.commands) {
       throw new UnregisteredCommandsError();
     }
 

@@ -341,9 +341,11 @@ export class SemanticAnalyzer {
 
 class SuperClassCrawler {
   private concreteState: SemanticState | null = null;
-  private transitionTuples: Map<string, TransitionTuple> = new Map();
 
-  constructor(private semanticStateMachine: SemanticStateMachine) {}
+  constructor(
+    private semanticStateMachine: SemanticStateMachine,
+    private transitionTuples: Map<string, TransitionTuple> = new Map()
+  ) {}
 
   public checkSuperClassTransitions(): void {
     for (const state of this.semanticStateMachine.states.values()) {

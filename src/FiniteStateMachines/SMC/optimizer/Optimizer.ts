@@ -54,9 +54,11 @@ export class Optimizer {
 }
 
 class StateOptimizer {
-  private eventsForThisState: Set<string> = new Set();
-
-  constructor(private currentState: SemanticState, private optimizedStateMachine: OptimizedStateMachine) {}
+  constructor(
+    private currentState: SemanticState,
+    private optimizedStateMachine: OptimizedStateMachine,
+    private eventsForThisState: Set<string> = new Set()
+  ) {}
 
   public addTransitionsForState(): void {
     const transition = new Transition(this.currentState.name);
