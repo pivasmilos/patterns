@@ -1,10 +1,7 @@
 import { SemanticStateMachine } from "../semanticAnalyzer/SemanticStateMachine";
 import { SemanticState } from "../semanticAnalyzer/SemanticState";
 import { SemanticTransition } from "../semanticAnalyzer/SemanticTransition";
-import { OptimizedStateMachine } from "./OptimizedStateMachine";
-import { Header } from "./Header";
-import { Transition } from "./Transition";
-import { SubTransition } from "./SubTransition";
+import { Header, OptimizedStateMachine, SubTransition, Transition } from "./OptimizedStateMachine";
 
 export class Optimizer {
   // non null assertions are ok because the values are set right away in the optimize method
@@ -96,7 +93,7 @@ class StateOptimizer {
 
   private addSubTransition(semanticTransition: SemanticTransition, transition: Transition): void {
     this.eventsForThisState.add(semanticTransition.event ?? "");
-    const subTransition = new SubTransition(semanticTransition.event ?? "");
+    const subTransition = new SubTransition(semanticTransition.event ?? "", semanticTransition.nextState?.name ?? "");
     new SubTransitionOptimizer(semanticTransition, subTransition, this.currentState).optimize();
     transition.subTransitions.push(subTransition);
   }
@@ -110,9 +107,6 @@ class SubTransitionOptimizer {
   ) {}
 
   public optimize(): void {
-    this.subTransition.event = this.semanticTransition.event ?? "";
-    this.subTransition.nextState = this.semanticTransition.nextState?.name ?? "";
-
     this.addExitActions(this.currentState);
 
     if (this.semanticTransition.nextState) {
