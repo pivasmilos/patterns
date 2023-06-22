@@ -1,6 +1,8 @@
 import { hash } from "../utilities";
 import { FsmSyntax, Header, SubTransition, Transition } from "../parser/FsmSyntax";
-import { SemanticStateMachine, SemanticState, SemanticTransition } from "./SemanticStateMachine";
+import { SemanticStateMachine } from "./SemanticStateMachine";
+import { SemanticState } from "./SemanticState";
+import { SemanticTransition } from "./SemanticTransition";
 import { AnalysisError, AnalysisErrorID } from "./AnalysisError";
 
 export class SemanticAnalyzer {
@@ -330,11 +332,7 @@ export class SemanticAnalyzer {
 
   private compileTransition(state: SemanticState, st: SubTransition): void {
     const nextState = st.nextState === null ? state : this.semanticStateMachine.states.get(st.nextState) ?? null;
-
-    const semanticTransition = new SemanticTransition();
-    semanticTransition.event = st.event;
-    semanticTransition.nextState = nextState;
-    semanticTransition.actions.push(...st.actions);
+    const semanticTransition = new SemanticTransition(st.event, nextState, st.actions);
     state.transitions.push(semanticTransition);
   }
 }

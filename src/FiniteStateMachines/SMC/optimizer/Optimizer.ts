@@ -1,5 +1,10 @@
-import { SemanticState, SemanticStateMachine, SemanticTransition } from "../semanticAnalyzer/SemanticStateMachine";
-import { Header, OptimizedStateMachine, SubTransition, Transition } from "./OptimizedStateMachine";
+import { SemanticStateMachine } from "../semanticAnalyzer/SemanticStateMachine";
+import { SemanticState } from "../semanticAnalyzer/SemanticState";
+import { SemanticTransition } from "../semanticAnalyzer/SemanticTransition";
+import { OptimizedStateMachine } from "./OptimizedStateMachine";
+import { Header } from "./Header";
+import { Transition } from "./Transition";
+import { SubTransition } from "./SubTransition";
 
 export class Optimizer {
   // non null assertions are ok because the values are set right away in the optimize method
