@@ -48,6 +48,7 @@ describe("Lexer", () => {
       error: jest.fn((line: number, pos: number) => {
         tokens.push(`E${line}:${pos}`);
       }),
+      eof: jest.fn(),
     };
     underTest = new Lexer(collector);
   });
@@ -112,10 +113,7 @@ describe("Lexer", () => {
     });
 
     it("should ignore comment lines", () => {
-      expectLexResult(
-        "//comment 1\n-//comment2\n//comment2\n-//comment4;",
-        "D,D"
-      );
+      expectLexResult("//comment 1\n-//comment2\n//comment2\n-//comment4;", "D,D");
     });
   });
 
@@ -133,10 +131,7 @@ describe("Lexer", () => {
     });
 
     it("should lex multiple lines", () => {
-      expectLexResult(
-        "FSM:fsm.\n{bob-.}",
-        "#FSM#,C,#fsm#,E1:8,OB,#bob#,D,E2:6,CB"
-      );
+      expectLexResult("FSM:fsm.\n{bob-.}", "#FSM#,C,#fsm#,E1:8,OB,#bob#,D,E2:6,CB");
     });
   });
 });

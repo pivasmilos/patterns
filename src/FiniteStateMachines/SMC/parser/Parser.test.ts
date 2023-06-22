@@ -1,7 +1,6 @@
 import { Lexer } from "../lexer/Lexer";
 import { compressWhiteSpace } from "../utilities";
 import { Parser } from "./Parser";
-import { ParserEvent } from "./ParserEvent";
 import { SyntaxBuilder } from "./SyntaxBuilder";
 
 describe("Parser", () => {
@@ -22,9 +21,7 @@ describe("Parser", () => {
 
   function assertParseError(s: string, expected: string) {
     lexer.lex(s);
-    // overriding for test purposes so that we can test the EOF errors
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (parser as any).handleEvent(ParserEvent.EOF, -1, -1);
+    parser.eof();
     expect(builder.getFsm().getError()).toEqual(expected);
   }
 

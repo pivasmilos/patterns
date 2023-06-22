@@ -1,4 +1,3 @@
-import { EOF } from "dns";
 import { Lexer } from "../lexer/Lexer";
 import { Parser } from "../parser/Parser";
 import { SyntaxBuilder } from "../parser/SyntaxBuilder";
@@ -31,9 +30,7 @@ describe("Optimizer", () => {
 
   const produceStateMachine = (fsmSyntax: string): OptimizedStateMachine => {
     lexer.lex(fsmSyntax);
-    // overriding for test purposes
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (parser as any).handleEvent(EOF, -1, -1);
+    parser.eof();
     const ast: SemanticStateMachine = analyzer.analyze(builder.getFsm());
     return optimizer.optimize(ast);
   };

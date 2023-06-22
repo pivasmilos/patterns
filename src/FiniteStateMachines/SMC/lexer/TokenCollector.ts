@@ -9,4 +9,5 @@ export interface TokenCollector {
   colon(line: number, pos: number): void;
   name(name: string, line: number, pos: number): void;
   error(line: number, pos: number): void;
+  eof(): void;
 }

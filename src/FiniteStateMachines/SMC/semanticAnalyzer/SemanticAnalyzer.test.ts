@@ -1,4 +1,3 @@
-import { EOF } from "dns";
 import { Lexer } from "../lexer/Lexer";
 import { Parser } from "../parser/Parser";
 import { SyntaxBuilder } from "../parser/SyntaxBuilder";
@@ -24,9 +23,7 @@ describe("SemanticAnalyzer", () => {
 
   const produceAst = (s: string): SemanticStateMachine => {
     lexer.lex(s);
-    // overriding for test purposes
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (parser as any).handleEvent(EOF, -1, -1);
+    parser.eof();
     return analyzer.analyze(builder.getFsm());
   };
 

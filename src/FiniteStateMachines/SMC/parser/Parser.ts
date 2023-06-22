@@ -78,6 +78,10 @@ export class Parser implements TokenCollector {
     this.builder.syntaxError(line, pos);
   }
 
+  public eof(): void {
+    this.handleEvent(PE.EOF, -1, -1);
+  }
+
   private handleEvent(event: PE, line: number, pos: number): void {
     const transition = this.transitions.find((t) => t.currentState === this.state && t.event === event);
 
