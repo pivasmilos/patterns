@@ -1,11 +1,12 @@
-import { hash } from "./hash";
+import { hash } from "../hash";
 
 export class Header {
-  public name = "";
-  public value = "";
+  constructor(public name: string | null = null, public value: string | null = null) {}
 
   hashCode(): string {
-    return hash(this.name + this.value);
+    const name = this.name ?? "";
+    const value = this.value ?? "";
+    return hash(name + value);
   }
 
   equals(other: Header): boolean {
