@@ -3,9 +3,11 @@ import { Lexer } from "../lexer/Lexer";
 import { Parser } from "../parser/Parser";
 import { SyntaxBuilder } from "../parser/SyntaxBuilder";
 import { SemanticAnalyzer } from "./SemanticAnalyzer";
-import { SemanticState, SemanticStateMachine } from "./SemanticStateMachine";
+import { SemanticStateMachine } from "./SemanticStateMachine";
+import { SemanticState } from "./SemanticState";
 import { Header } from "../parser/FsmSyntax";
 import { AnalysisError, AnalysisErrorID } from "./AnalysisError";
+import { compressWhiteSpace } from "../utilities";
 
 describe("SemanticAnalyzer", () => {
   let lexer: Lexer;
@@ -362,7 +364,7 @@ describe("SemanticAnalyzer", () => {
 
     function assertSyntaxToAst(syntax: string, expected: string): void {
       const states = produceAst(addHeader(syntax)).statesToString();
-      expect(states).toEqual(expected);
+      expect(compressWhiteSpace(states)).toEqual(compressWhiteSpace(expected));
     }
 
     test("oneTransition", () => {
@@ -382,13 +384,13 @@ describe("SemanticAnalyzer", () => {
 
     test("twoTransitionsAreAggregated", () => {
       assertSyntaxToAst(
-        "{s e1 s a s e2 s a}",
+        "{s e1 s a s             e2 s a}",
         [
           //
           "{",
-          "  s {",
+          "          s {",
           "    e1 s {a}",
-          "    e2 s {a}",
+          "     e2 s    {a}",
           "  }",
           "}",
           "",

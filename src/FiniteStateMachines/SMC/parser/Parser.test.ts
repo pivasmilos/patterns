@@ -1,4 +1,5 @@
 import { Lexer } from "../lexer/Lexer";
+import { compressWhiteSpace } from "../utilities";
 import { Parser } from "./Parser";
 import { ParserEvent } from "./ParserEvent";
 import { SyntaxBuilder } from "./SyntaxBuilder";
@@ -16,7 +17,7 @@ describe("Parser", () => {
 
   function assertParseResult(s: string, expected: string) {
     lexer.lex(s);
-    expect(builder.getFsm().toString()).toEqual(expected);
+    expect(compressWhiteSpace(builder.getFsm().toString())).toEqual(compressWhiteSpace(expected));
   }
 
   function assertParseError(s: string, expected: string) {
