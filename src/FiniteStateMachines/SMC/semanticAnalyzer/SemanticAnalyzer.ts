@@ -1,4 +1,4 @@
-import { hash } from "../hash";
+import { hash } from "../utilities";
 import { FsmSyntax, Header, SubTransition, Transition } from "../parser/FsmSyntax";
 import { SemanticStateMachine, SemanticState, SemanticTransition } from "./SemanticStateMachine";
 import { AnalysisError, AnalysisErrorID } from "./AnalysisError";
@@ -93,7 +93,7 @@ export class SemanticAnalyzer {
   private addEventsToEventList(fsm: FsmSyntax): void {
     for (const t of fsm.logic) {
       for (const st of t.subTransitions) {
-        if (st.event != null) {
+        if (st.event !== null) {
           this.semanticStateMachine.events.add(st.event);
         }
       }
@@ -128,7 +128,7 @@ export class SemanticAnalyzer {
       }
     }
 
-    if (this.initialHeader.value != null && !this.semanticStateMachine.states.has(this.initialHeader.value)) {
+    if (this.initialHeader.value !== null && !this.semanticStateMachine.states.has(this.initialHeader.value)) {
       this.semanticStateMachine.addError(
         new AnalysisError(AnalysisErrorID.UNDEFINED_STATE, `initial: ${this.initialHeader.value}`)
       );
@@ -136,7 +136,7 @@ export class SemanticAnalyzer {
   }
 
   private checkUndefinedState(referencedState: string | null, errorCode: AnalysisErrorID): void {
-    if (referencedState != null && !this.semanticStateMachine.states.has(referencedState)) {
+    if (referencedState !== null && !this.semanticStateMachine.states.has(referencedState)) {
       this.semanticStateMachine.addError(new AnalysisError(errorCode, referencedState));
     }
   }
@@ -167,7 +167,7 @@ export class SemanticAnalyzer {
     const nextStates = new Set<string>();
     for (const t of fsm.logic) {
       for (const st of t.subTransitions) {
-        if (st.nextState == null) {
+        if (st.nextState === null) {
           nextStates.add(t.state.name);
         } else {
           nextStates.add(st.nextState);
@@ -309,7 +309,7 @@ export class SemanticAnalyzer {
 
     state.entryActions.push(...t.state.entryActions);
     state.exitActions.push(...t.state.exitActions);
-    state.abstractState ||= t.state.isAbstractState;
+    state.isAbstractState ||= t.state.isAbstractState;
     for (const superStateName of t.state.superStates) {
       const superState = this.semanticStateMachine.states.get(superStateName);
 
@@ -347,7 +347,7 @@ class SuperClassCrawler {
 
   public checkSuperClassTransitions(): void {
     for (const state of this.semanticStateMachine.states.values()) {
-      if (!state.abstractState) {
+      if (!state.isAbstractState) {
         this.concreteState = state;
         this.transitionTuples = new Map();
         this.checkTransitionsForState(this.concreteState);

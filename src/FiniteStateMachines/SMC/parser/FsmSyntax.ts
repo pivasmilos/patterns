@@ -1,4 +1,4 @@
-import { hash } from "../hash";
+import { hash } from "../utilities";
 
 export class Header {
   constructor(public name: string | null = null, public value: string | null = null) {}

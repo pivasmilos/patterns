@@ -1,4 +1,4 @@
-import { hash } from "../hash";
+import { hash } from "../utilities";
 
 export class AnalysisError {
   public id: AnalysisErrorID;

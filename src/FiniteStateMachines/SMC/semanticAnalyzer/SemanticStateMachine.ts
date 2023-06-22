@@ -36,7 +36,7 @@ export class SemanticState implements Comparable<SemanticState> {
   public name: string;
   public entryActions: string[] = [];
   public exitActions: string[] = [];
-  public abstractState = false;
+  public isAbstractState = false;
   public superStates: Set<SemanticState> = new Set();
   public transitions: SemanticTransition[] = [];
 
@@ -51,7 +51,7 @@ export class SemanticState implements Comparable<SemanticState> {
       obj.exitActions === this.exitActions &&
       obj.superStates === this.superStates &&
       obj.transitions === this.transitions &&
-      obj.abstractState === this.abstractState
+      obj.isAbstractState === this.isAbstractState
     );
   }
 
@@ -76,7 +76,7 @@ export class SemanticState implements Comparable<SemanticState> {
   }
 
   private makeStateNameWithAdornments(): string {
-    const stateName = this.abstractState ? `(${this.name})` : this.name;
+    const stateName = this.isAbstractState ? `(${this.name})` : this.name;
     const superStateNames = Array.from(this.superStates, (s) => `:${s.name}`);
     const entryActionNames = this.entryActions.map((a) => `<${a}`);
     const exitActionNames = this.exitActions.map((a) => `>${a}`);
