@@ -23,19 +23,19 @@ export class Model<T> {
   }
 }
 
-/**
- * E.g. a DOM element.
- */
-interface Stringable {
+interface ToStringable {
   toString(): string;
+}
+
+interface FromStringable {
   fromString(value: string): void;
 }
 
 export class View {
-  private readonly inputElement: Stringable;
-  private readonly outputElement: Stringable;
+  private readonly inputElement: ToStringable;
+  private readonly outputElement: FromStringable;
 
-  constructor(inputElement: Stringable, outputElement: Stringable) {
+  constructor(inputElement: ToStringable, outputElement: FromStringable) {
     this.inputElement = inputElement;
     this.outputElement = outputElement;
   }
