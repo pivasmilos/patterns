@@ -10,7 +10,7 @@ export class SwitchCaseNode implements NSCNode {
   }
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitSwitchCaseNode(this);
   }
 
   public generateCases(visitor: NSCNodeVisitor): void {
@@ -24,7 +24,7 @@ export class CaseNode implements NSCNode {
   constructor(public switchName: string, public caseName: string, public caseActionNode: NSCNode | null = null) {}
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitCaseNode(this);
   }
 }
 
@@ -32,7 +32,7 @@ export class FunctionCallNode implements NSCNode {
   constructor(public functionName: string, public argument?: NSCNode) {}
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitFunctionCallNode(this);
   }
 }
 
@@ -54,7 +54,7 @@ export class EnumNode implements NSCNode {
   constructor(public name: string, public enumerators: string[]) {}
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitEnumNode(this);
   }
 }
 
@@ -62,7 +62,7 @@ export class StatePropertyNode implements NSCNode {
   constructor(public initialState: string) {}
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitStatePropertyNode(this);
   }
 }
 
@@ -70,7 +70,7 @@ export class EventDelegatorsNode implements NSCNode {
   constructor(public readonly events: string[]) {}
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitEventDelegatorsNode(this);
   }
 }
 
@@ -85,7 +85,7 @@ export class FSMClassNode implements NSCNode {
   public actions: string[] = [];
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitFSMClassNode(this);
   }
 }
 
@@ -93,7 +93,7 @@ export class HandleEventNode implements NSCNode {
   constructor(public readonly switchCase: SwitchCaseNode) {}
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitHandleEventNode(this);
   }
 }
 
@@ -101,7 +101,7 @@ export class EnumeratorNode implements NSCNode {
   constructor(public readonly enumeration: string, public readonly enumerator: string) {}
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitEnumeratorNode(this);
   }
 }
 
@@ -109,6 +109,6 @@ export class DefaultCaseNode implements NSCNode {
   constructor(public readonly state: string) {}
 
   public accept(visitor: NSCNodeVisitor): void {
-    visitor.visit(this);
+    visitor.visitDefaultCaseNode(this);
   }
 }

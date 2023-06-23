@@ -18,7 +18,6 @@ import {
   HandleEventNode,
   EnumeratorNode,
   DefaultCaseNode,
-  NSCNode,
 } from "./NSCNode";
 import { compressWhiteSpace } from "../../utilities";
 
@@ -61,32 +60,40 @@ describe("NSCGenerator", () => {
   }
 
   class EmptyVisitor implements NSCNodeVisitor {
-    visit(node: NSCNode): void {
-      if (node instanceof SwitchCaseNode) {
-        // Handle SwitchCaseNode
-      } else if (node instanceof CaseNode) {
-        // Handle CaseNode
-      } else if (node instanceof FunctionCallNode) {
-        // Handle FunctionCallNode
-      } else if (node instanceof EnumNode) {
-        // Handle EnumNode
-      } else if (node instanceof StatePropertyNode) {
-        // Handle StatePropertyNode
-      } else if (node instanceof EventDelegatorsNode) {
-        // Handle EventDelegatorsNode
-      } else if (node instanceof HandleEventNode) {
-        node.switchCase.accept(this);
-      } else if (node instanceof EnumeratorNode) {
-        output += `${node.enumeration}.${node.enumerator}`;
-      } else if (node instanceof DefaultCaseNode) {
-        output += ` default(${node.state});`;
-      } else if (node instanceof FSMClassNode) {
-        node.delegators?.accept(this);
-        node.stateEnum?.accept(this);
-        node.eventEnum?.accept(this);
-        node.stateProperty?.accept(this);
-        node.handleEvent?.accept(this);
-      }
+    visitSwitchCaseNode(_node: SwitchCaseNode): void {
+      // no-op
+    }
+    visitCaseNode(_node: CaseNode): void {
+      // no-op
+    }
+    visitFunctionCallNode(_node: FunctionCallNode): void {
+      // no-op
+    }
+    visitEnumNode(_node: EnumNode): void {
+      // no-op
+    }
+    visitStatePropertyNode(_node: StatePropertyNode): void {
+      // no-op
+    }
+    visitEventDelegatorsNode(_node: EventDelegatorsNode): void {
+      // no-op
+    }
+
+    visitFSMClassNode(node: FSMClassNode) {
+      node.delegators?.accept(this);
+      node.stateEnum?.accept(this);
+      node.eventEnum?.accept(this);
+      node.stateProperty?.accept(this);
+      node.handleEvent?.accept(this);
+    }
+    visitHandleEventNode(node: HandleEventNode) {
+      node.switchCase.accept(this);
+    }
+    visitEnumeratorNode(node: EnumeratorNode) {
+      output += `${node.enumeration}.${node.enumerator}`;
+    }
+    visitDefaultCaseNode(node: DefaultCaseNode) {
+      output += ` default(${node.state});`;
     }
   }
 
@@ -96,22 +103,22 @@ describe("NSCGenerator", () => {
     });
 
     class TestVisitor extends EmptyVisitor {
-      override visit(node: NSCNode): void {
-        if (node instanceof SwitchCaseNode) {
-          output += `s ${node.variableName} {`;
-          node.generateCases(implementer);
-          output += "} ";
-        } else if (node instanceof CaseNode) {
-          output += `case ${node.caseName} {`;
-          node.caseActionNode?.accept(this);
-          output += "} ";
-        } else if (node instanceof FunctionCallNode) {
-          output += `${node.functionName}(`;
-          if (node.argument !== undefined) node.argument.accept(this);
-          output += ") ";
-        } else {
-          super.visit(node);
-        }
+      override visitSwitchCaseNode(node: SwitchCaseNode): void {
+        output += `s ${node.variableName} {`;
+        node.generateCases(implementer);
+        output += "} ";
+      }
+
+      override visitCaseNode(node: CaseNode): void {
+        output += `case ${node.caseName} {`;
+        node.caseActionNode?.accept(this);
+        output += "} ";
+      }
+
+      override visitFunctionCallNode(node: FunctionCallNode): void {
+        output += `${node.functionName}(`;
+        if (node.argument !== undefined) node.argument.accept(this);
+        output += ") ";
       }
     }
 
@@ -146,12 +153,8 @@ describe("NSCGenerator", () => {
     });
 
     class EnumVisitor extends EmptyVisitor {
-      override visit(node: NSCNode): void {
-        if (node instanceof EnumNode) {
-          output += `enum ${node.name} [${node.enumerators}] `;
-        } else {
-          super.visit(node);
-        }
+      override visitEnumNode(node: EnumNode): void {
+        output += `enum ${node.name} [${node.enumerators}] `;
       }
     }
 
@@ -169,12 +172,8 @@ describe("NSCGenerator", () => {
     });
 
     class StatePropertyVisitor extends EmptyVisitor {
-      override visit(node: NSCNode): void {
-        if (node instanceof StatePropertyNode) {
-          output += `state property = ${node.initialState}`;
-        } else {
-          super.visit(node);
-        }
+      override visitStatePropertyNode(node: StatePropertyNode): void {
+        output += `state property = ${node.initialState}`;
       }
     }
 
@@ -189,12 +188,8 @@ describe("NSCGenerator", () => {
     });
 
     class EventDelegatorVisitor extends EmptyVisitor {
-      override visit(node: NSCNode): void {
-        if (node instanceof EventDelegatorsNode) {
-          output += `delegators [${node.events}]`;
-        } else {
-          super.visit(node);
-        }
+      override visitEventDelegatorsNode(node: EventDelegatorsNode): void {
+        output += `delegators [${node.events}]`;
       }
     }
 
@@ -212,16 +207,14 @@ describe("NSCGenerator", () => {
     });
 
     class HandleEventVisitor extends EmptyVisitor {
-      override visit(node: NSCNode): void {
-        if (node instanceof SwitchCaseNode) {
-          output += "s";
-        } else if (node instanceof HandleEventNode) {
-          output += "he(";
-          node.switchCase.accept(this);
-          output += ")";
-        } else {
-          super.visit(node);
-        }
+      override visitSwitchCaseNode(_node: SwitchCaseNode): void {
+        output += "s";
+      }
+
+      override visitHandleEventNode(node: HandleEventNode): void {
+        output += "he(";
+        node.switchCase.accept(this);
+        output += ")";
       }
     }
 
@@ -236,28 +229,34 @@ describe("NSCGenerator", () => {
     });
 
     class FSMClassVisitor extends EmptyVisitor {
-      override visit(node: NSCNode): void {
-        if (node instanceof SwitchCaseNode) {
-          output += "sc";
-        } else if (node instanceof EnumNode) {
-          output += "e ";
-        } else if (node instanceof StatePropertyNode) {
-          output += "p ";
-        } else if (node instanceof EventDelegatorsNode) {
-          output += "d ";
-        } else if (node instanceof HandleEventNode) {
-          output += "he ";
-        } else if (node instanceof FSMClassNode) {
-          const fsmClassNode = node as FSMClassNode;
-          output += `class ${fsmClassNode.className}:${fsmClassNode.actionsName} {`;
-          fsmClassNode.delegators?.accept(this);
-          fsmClassNode.stateEnum?.accept(this);
-          fsmClassNode.eventEnum?.accept(this);
-          fsmClassNode.stateProperty?.accept(this);
-          fsmClassNode.handleEvent?.accept(this);
-          fsmClassNode.handleEvent?.switchCase.accept(this);
-          output += "}";
-        }
+      override visitSwitchCaseNode(_node: SwitchCaseNode): void {
+        output += "sc";
+      }
+
+      override visitEnumNode(_node: EnumNode): void {
+        output += "e ";
+      }
+
+      override visitStatePropertyNode(_node: StatePropertyNode): void {
+        output += "p ";
+      }
+
+      override visitEventDelegatorsNode(_node: EventDelegatorsNode): void {
+        output += "d ";
+      }
+      override visitHandleEventNode(_node: HandleEventNode): void {
+        output += "he ";
+      }
+      override visitFSMClassNode(node: FSMClassNode): void {
+        const fsmClassNode = node as FSMClassNode;
+        output += `class ${fsmClassNode.className}:${fsmClassNode.actionsName} {`;
+        fsmClassNode.delegators?.accept(this);
+        fsmClassNode.stateEnum?.accept(this);
+        fsmClassNode.eventEnum?.accept(this);
+        fsmClassNode.stateProperty?.accept(this);
+        fsmClassNode.handleEvent?.accept(this);
+        fsmClassNode.handleEvent?.switchCase.accept(this);
+        output += "}";
       }
     }
 
