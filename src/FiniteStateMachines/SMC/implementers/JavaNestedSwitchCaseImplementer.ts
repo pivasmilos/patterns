@@ -10,7 +10,6 @@ import {
   EnumeratorNode,
 } from "../generators/nestedSwitchCaseGenerator/NSCNode";
 import { NSCNodeVisitor } from "../generators/nestedSwitchCaseGenerator/NSCNodeVisitor";
-import { commaList } from "../utilities";
 
 export class JavaNestedSwitchCaseImplementer implements NSCNodeVisitor {
   private output = "";
@@ -43,7 +42,7 @@ export class JavaNestedSwitchCaseImplementer implements NSCNodeVisitor {
   }
 
   public visitEnumNode(node: EnumNode): void {
-    this.output += `private enum ${node.name} {${commaList(node.enumerators)}}\n`;
+    this.output += `private enum ${node.name} {${node.enumerators.join(",")}}\n`;
   }
 
   public visitStatePropertyNode(node: StatePropertyNode): void {

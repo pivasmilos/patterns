@@ -11,8 +11,8 @@ describe("Lexer", () => {
     expect(getTokensToCompare(tokens)).toEqual(expectedOutput);
   }
 
-  function getTokensToCompare(tokens: string[]): string {
-    return tokens.join(",");
+  function getTokensToCompare(t: string[]): string {
+    return t.join(",");
   }
 
   beforeEach(() => {

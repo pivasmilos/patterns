@@ -263,18 +263,7 @@ export class SemanticAnalyzer {
     const actions: string[] = [];
     actions.push(...t.state.entryActions);
     actions.push(...t.state.exitActions);
-    return this.commaList(actions);
-  }
-
-  private commaList(list: string[]): string {
-    let commaList = "";
-    if (list.length === 0) {
-      return "";
-    }
-    for (const s of list) {
-      commaList += s + ",";
-    }
-    return commaList.substring(0, commaList.length - 1);
+    return actions.join(",");
   }
 
   private produceSemanticStateMachine(fsm: FsmSyntax): void {
