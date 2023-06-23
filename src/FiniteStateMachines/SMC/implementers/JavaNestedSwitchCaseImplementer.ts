@@ -56,8 +56,12 @@ export class JavaNestedSwitchCaseImplementer implements NSCNodeVisitor {
       const actionsName = node.actionsName;
       if (!actionsName) {
         this.output += `public abstract class ${node.className} {\n`;
+        for (const action of node.actions) {
+          this.output += `protected abstract void ${action}();\n`;
+        }
       } else {
         this.output += `public abstract class ${node.className} implements ${actionsName} {\n`;
+        // no need to declare abstract actions, they are implicitly declared through the interface
       }
 
       this.output += "public abstract void unhandledTransition(String state, String event);\n";
@@ -66,11 +70,6 @@ export class JavaNestedSwitchCaseImplementer implements NSCNodeVisitor {
       node.stateProperty?.accept(this);
       node.delegators?.accept(this);
       node.handleEvent?.accept(this);
-      if (!actionsName) {
-        for (const action of node.actions) {
-          this.output += `protected abstract void ${action}();\n`;
-        }
-      }
       this.output += "}\n";
     } else if (node instanceof HandleEventNode) {
       this.output += "private void handleEvent(Event event) {\n";

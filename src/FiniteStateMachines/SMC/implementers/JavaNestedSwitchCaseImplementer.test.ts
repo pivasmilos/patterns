@@ -108,4 +108,118 @@ describe("JavaNestedSwitchCaseImplementer", () => {
     expect(output).toMatch(/^public abstract class fsm {/);
     expect(output).toContain("protected abstract void A();\n");
   });
+
+  test("two coin turnstile", () => {
+    const implementer = new JavaNestedSwitchCaseImplementer(emptyFlags);
+    const sm = produceStateMachine(
+      "" +
+        "Actions: Turnstile\n" +
+        "FSM: TwoCoinTurnstile\n" +
+        "Initial: Locked\n" +
+        "{\n" +
+        "    (Base)\tReset\tLocked\tlock\n" +
+        "\n" +
+        "\tLocked : Base {\n" +
+        "\t\tPass\tAlarming\t-\n" +
+        "\t\tCoin\tFirstCoin\t-\n" +
+        "\t}\n" +
+        "\t\n" +
+        "\tAlarming : Base\t<alarmOn >alarmOff -\t-\t-\n" +
+        "\t\n" +
+        "\tFirstCoin : Base {\n" +
+        "\t\tPass\tAlarming\t-\n" +
+        "\t\tCoin\tUnlocked\tunlock\n" +
+        "\t}\n" +
+        "\t\n" +
+        "\tUnlocked : Base {\n" +
+        "\t\tPass\tLocked\tlock\n" +
+        "\t\tCoin\t-\t\tthankyou\n" +
+        "\t}\n" +
+        "}"
+    );
+    const generatedFsm = generator.generate(sm);
+    generatedFsm.accept(implementer);
+    const output = implementer.getOutput();
+    expect(output).toMatch(/^public abstract class TwoCoinTurnstile implements Turnstile {/);
+    expect(compressWhiteSpace(output)).toEqual(
+      compressWhiteSpace(
+        "" +
+          "public abstract class TwoCoinTurnstile implements Turnstile {\n" +
+          "  public abstract void unhandledTransition(String state, String event);\n" +
+          "  private enum State {Locked,Alarming,FirstCoin,Unlocked}\n" +
+          "  private enum Event {Reset,Pass,Coin}\n" +
+          "  private State state = State.Locked;\n" +
+          "" +
+          "  private void setState(State s) {state = s;}\n" +
+          "  public void Reset() {handleEvent(Event.Reset);}\n" +
+          "  public void Pass() {handleEvent(Event.Pass);}\n" +
+          "  public void Coin() {handleEvent(Event.Coin);}\n" +
+          "  private void handleEvent(Event event) {\n" +
+          "    switch(state) {\n" +
+          "      case Locked:\n" +
+          "        switch(event) {\n" +
+          "          case Pass:\n" +
+          "            setState(State.Alarming);\n" +
+          "            alarmOn();\n" +
+          "            break;\n" +
+          "          case Coin:\n" +
+          "            setState(State.FirstCoin);\n" +
+          "            break;\n" +
+          "          case Reset:\n" +
+          "            setState(State.Locked);\n" +
+          "            lock();\n" +
+          "            break;\n" +
+          "          default: unhandledTransition(state.name(), event.name()); break;\n" +
+          "        }\n" +
+          "        break;\n" +
+          "      case Alarming:\n" +
+          "        switch(event) {\n" +
+          "          case Reset:\n" +
+          "            setState(State.Locked);\n" +
+          "            alarmOff();\n" +
+          "            lock();\n" +
+          "            break;\n" +
+          "          default: unhandledTransition(state.name(), event.name()); break;\n" +
+          "        }\n" +
+          "        break;\n" +
+          "      case FirstCoin:\n" +
+          "        switch(event) {\n" +
+          "          case Pass:\n" +
+          "            setState(State.Alarming);\n" +
+          "            alarmOn();\n" +
+          "            break;\n" +
+          "          case Coin:\n" +
+          "            setState(State.Unlocked);\n" +
+          "            unlock();\n" +
+          "            break;\n" +
+          "          case Reset:\n" +
+          "            setState(State.Locked);\n" +
+          "            lock();\n" +
+          "            break;\n" +
+          "          default: unhandledTransition(state.name(), event.name()); break;\n" +
+          "        }\n" +
+          "        break;\n" +
+          "      case Unlocked:\n" +
+          "        switch(event) {\n" +
+          "          case Pass:\n" +
+          "            setState(State.Locked);\n" +
+          "            lock();\n" +
+          "            break;\n" +
+          "          case Coin:\n" +
+          "            setState(State.Unlocked);\n" +
+          "            thankyou();\n" +
+          "            break;\n" +
+          "          case Reset:\n" +
+          "            setState(State.Locked);\n" +
+          "            lock();\n" +
+          "            break;\n" +
+          "          default: unhandledTransition(state.name(), event.name()); break;\n" +
+          "        }\n" +
+          "        break;\n" +
+          "    }\n" +
+          "  }\n" +
+          "}\n"
+      )
+    );
+  });
 });
