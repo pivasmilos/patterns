@@ -20,4 +20,23 @@ describe("Singleton", () => {
       expect(console.log).toHaveBeenCalledWith("Doing something...");
     });
   });
+
+  describe("how to test a class that uses a Singleton", () => {
+    class ClassThatUsesSingleton {
+      public getData(): string {
+        const instance = Singleton.getInstance();
+        return instance.data;
+      }
+    }
+
+    it("should return the data from the Singleton", () => {
+      const sut = new ClassThatUsesSingleton();
+      // keeping testability at the cost of breaking Singleton's encapsulation
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (Singleton as any).data = "42";
+
+      const result = sut.getData();
+      expect(result).toBe("42");
+    });
+  });
 });
