@@ -1,6 +1,10 @@
+import { setup, teardown } from "../../TestUtils/testUtils";
 import { CommandsActor } from "./CommandsActor";
 
 describe("Actor", () => {
+  beforeEach(setup);
+  afterEach(teardown);
+
   describe("run added commands", () => {
     it("runs the single added command", () => {
       const sut = new CommandsActor();

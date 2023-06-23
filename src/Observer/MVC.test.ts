@@ -1,6 +1,10 @@
+import { setup, teardown } from "../TestUtils/testUtils";
 import { Model, View, Controller } from "./MVC";
 
 describe("MVC", () => {
+  beforeEach(setup);
+  afterEach(teardown);
+
   describe("Model", () => {
     it("should set and get data", () => {
       const model = new Model();
@@ -30,10 +34,8 @@ describe("MVC", () => {
     it("should update when model data is updated", () => {
       const model = new Model();
       new View(model);
-      const spy = jest.spyOn(console, "log");
       model.setData("test");
-      expect(spy).toHaveBeenCalledWith("View: test");
-      spy.mockRestore();
+      expect(console.log).toHaveBeenCalledWith("View: test");
     });
   });
 

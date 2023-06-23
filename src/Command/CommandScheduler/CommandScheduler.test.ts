@@ -4,8 +4,8 @@ import { PosixTime, Schedule } from "./Schedule";
 import { SimpleTimeScheduler } from "./SimpleTimeScheduler";
 
 describe("CommandScheduler.execute", () => {
-  beforeAll(setup);
-  afterAll(teardown);
+  beforeEach(setup);
+  afterEach(teardown);
 
   it("executes the commands at given time", async () => {
     const record: PosixTime[] = [];

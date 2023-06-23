@@ -1,8 +1,12 @@
+import { setup, teardown } from "../TestUtils/testUtils";
 import { ConcretePullObserver, ConcretePullSubject, PullObserver, PullSubject } from "./v1PullObserver";
 import { ObservedPullSubject, ConcretePullObserverV2, PullSubjectV2, PullObserverV2 } from "./v2PullObserverDecoupled";
 import { PushObserver, ConcretePushObserver, ObservedPushSubject, PushSubject } from "./v3PushObserver";
 
 describe("Observers", () => {
+  beforeEach(setup);
+  afterEach(teardown);
+
   describe("Pull Observer Pattern", () => {
     let subject: PullSubject;
     let observer1: PullObserver;
@@ -38,12 +42,10 @@ describe("Observers", () => {
     });
 
     test("observers receive correct message", () => {
-      const spy1 = jest.spyOn(console, "log");
-
       subject.setMessage("Hello, observers!");
 
-      expect(spy1).toHaveBeenCalledWith("Observer 1 received message: Hello, observers!");
-      expect(spy1).toHaveBeenCalledWith("Observer 2 received message: Hello, observers!");
+      expect(console.log).toHaveBeenCalledWith("Observer 1 received message: Hello, observers!");
+      expect(console.log).toHaveBeenCalledWith("Observer 2 received message: Hello, observers!");
     });
   });
 
@@ -82,12 +84,10 @@ describe("Observers", () => {
     });
 
     test("observers receive correct message", () => {
-      const spy1 = jest.spyOn(console, "log");
-
       subject.setMessage("Hello, observers!");
 
-      expect(spy1).toHaveBeenCalledWith("Observer 1 received message: Hello, observers!");
-      expect(spy1).toHaveBeenCalledWith("Observer 2 received message: Hello, observers!");
+      expect(console.log).toHaveBeenCalledWith("Observer 1 received message: Hello, observers!");
+      expect(console.log).toHaveBeenCalledWith("Observer 2 received message: Hello, observers!");
     });
   });
 
@@ -127,12 +127,10 @@ describe("Observers", () => {
     });
 
     test("observers receive correct message", () => {
-      const spy1 = jest.spyOn(console, "log");
-
       subject.setMessage("Hello, observers!");
 
-      expect(spy1).toHaveBeenCalledWith("Observer 1 received message: Hello, observers!");
-      expect(spy1).toHaveBeenCalledWith("Observer 2 received message: Hello, observers!");
+      expect(console.log).toHaveBeenCalledWith("Observer 1 received message: Hello, observers!");
+      expect(console.log).toHaveBeenCalledWith("Observer 2 received message: Hello, observers!");
     });
   });
 });

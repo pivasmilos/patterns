@@ -3,8 +3,8 @@ import { ComplexCommand } from "./ComplexCommand";
 import { Receiver } from "./Receiver";
 
 describe("ComplexCommand.execute", () => {
-  beforeAll(setup);
-  afterAll(teardown);
+  beforeEach(setup);
+  afterEach(teardown);
 
   it("should output the string to console", () => {
     const receiver = new Receiver();
@@ -15,8 +15,6 @@ describe("ComplexCommand.execute", () => {
 
     sut.execute();
 
-    expect(console.log).toHaveBeenCalledWith(
-      "ComplexCommand: Complex stuff should be done by a receiver object."
-    );
+    expect(console.log).toHaveBeenCalledWith("ComplexCommand: Complex stuff should be done by a receiver object.");
   });
 });

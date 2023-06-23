@@ -2,8 +2,8 @@ import { setup, teardown } from "../../TestUtils/testUtils";
 import { Invoker, UnregisteredCommandsError } from "./Invoker";
 
 describe("Invoker", () => {
-  beforeAll(setup);
-  afterAll(teardown);
+  beforeEach(setup);
+  afterEach(teardown);
 
   describe("doSomethingImportant", () => {
     it("throws UnregisteredCommandsError when the commands are not registered", () => {

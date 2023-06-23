@@ -2,8 +2,8 @@ import { setup, teardown } from "../../TestUtils/testUtils";
 import { ShapesApplication } from "./ShapesApplication";
 
 describe("ShapesApplication", () => {
-  beforeAll(setup);
-  afterAll(teardown);
+  beforeEach(setup);
+  afterEach(teardown);
 
   describe("run", () => {
     it("should draw a red circle and a red square", () => {
