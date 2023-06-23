@@ -24,19 +24,19 @@ export class JavaNestedSwitchCaseImplementer implements NSCNodeVisitor {
   }
 
   public visitSwitchCaseNode(node: SwitchCaseNode): void {
-    this.output += `switch(${node.variableName}) {\n`;
+    this.output += `  switch(${node.variableName}) {\n`;
     node.generateCases(this);
-    this.output += "}\n";
+    this.output += "  }\n";
   }
 
   public visitCaseNode(node: CaseNode): void {
-    this.output += `case ${node.caseName}:\n`;
+    this.output += `    case ${node.caseName}:\n`;
     node.caseActionNode?.accept(this);
-    this.output += "break;\n";
+    this.output += "      break;\n";
   }
 
   public visitFunctionCallNode(node: FunctionCallNode): void {
-    this.output += `${node.functionName}(`;
+    this.output += `      ${node.functionName}(`;
     node.argument?.accept(this);
     this.output += ");\n";
   }
@@ -92,7 +92,7 @@ export class JavaNestedSwitchCaseImplementer implements NSCNodeVisitor {
   }
 
   public visitDefaultCaseNode(): void {
-    this.output += "default: unhandledTransition(state.name(), event.name()); break;\n";
+    this.output += "    default: unhandledTransition(state.name(), event.name()); break;\n";
   }
 
   public getOutput(): string {

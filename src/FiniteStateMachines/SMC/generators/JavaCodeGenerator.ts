@@ -9,7 +9,7 @@ export class JavaCodeGenerator extends CodeGenerator {
 
   constructor(
     optimizedStateMachine: OptimizedStateMachine,
-    outputDirectory: string | null,
+    outputDirectory: string | undefined,
     flags: Map<string, string>
   ) {
     super(optimizedStateMachine, outputDirectory, flags);
