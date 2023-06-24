@@ -1,5 +1,39 @@
-import { ShapePrototype } from "./ShapePrototype";
-import { circlePrototype, squarePrototype } from "./ShapePrototypesLibrary";
+import { Shape } from "../Shapes/Shape";
+
+export interface Cloneable {
+  clone(): Cloneable;
+}
+export interface ColoredShape extends Shape {
+  color: string;
+}
+
+export abstract class ShapePrototype implements ColoredShape, Cloneable {
+  public clone(): ShapePrototype {
+    return Object.create(this);
+  }
+
+  public abstract color: string;
+  public abstract draw(): void;
+}
+
+export class CirclePrototype extends ShapePrototype {
+  override color = "white";
+
+  override draw(): void {
+    console.log(`CirclePrototype'.draw: I'm a CirclePrototype'! Color: ${this.color}`);
+  }
+}
+
+export class SquarePrototype extends ShapePrototype {
+  override color = "black";
+
+  override draw(): void {
+    console.log(`SquarePrototype'.draw: I'm a SquarePrototype'! Color: ${this.color}`);
+  }
+}
+
+export const circlePrototype: ShapePrototype = new CirclePrototype();
+export const squarePrototype: ShapePrototype = new SquarePrototype();
 
 export class ShapesApplication {
   public run(): void {
