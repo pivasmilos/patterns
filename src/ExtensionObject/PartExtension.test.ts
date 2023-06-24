@@ -41,7 +41,9 @@ describe("PartExtension extension objects", () => {
         return;
       }
       expect(assemblyExplosionExtension.createExplosionReport()).toEqual(
-        "Explosion report for assembly: Bolt and Nut Assembly.\nPiece explosion report: Bolt. For part piece at $0.5\nPiece explosion report: Nut. For part piece at $0.3"
+        "Explosion report for assembly: Bolt and Nut Assembly.\n" + //
+          "Piece explosion report: Bolt. For part piece at $0.5\n" +
+          "Piece explosion report: Nut. For part piece at $0.3"
       );
     });
 
@@ -76,7 +78,9 @@ describe("PartExtension extension objects", () => {
       }
 
       expect(assemblyCromulentExtension.cromulentize()).toEqual(
-        "Cromulent assembly: Bolt and Nut Assembly.\nCromulent piece named Bolt\nCromulent piece named Nut"
+        "Cromulent assembly: Bolt and Nut Assembly.\n" + //
+          "Cromulent piece named Bolt\n" +
+          "Cromulent piece named Nut"
       );
     });
 
