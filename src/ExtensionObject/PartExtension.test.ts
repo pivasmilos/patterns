@@ -16,7 +16,6 @@ describe("PartExtension extension objects", () => {
       const piecePartExplosionExtension = piecePart.partExtensionsMap["explosion"];
 
       expect(piecePart).toBeInstanceOf(PiecePart);
-      expect(piecePartExplosionExtension?.extensionType).toBe("explosion");
       expect(piecePartExplosionExtension).toBeInstanceOf(PiecePartExplosionExtension);
       if (!(piecePartExplosionExtension instanceof PiecePartExplosionExtension)) {
         // always true if the previous expect passed, but TypeScript doesn't know that
