@@ -1,9 +1,12 @@
+export type VolumeType = "low" | "high";
+export type ModemTypes = "Hayes" | "USR";
+
 export class Modem {
   dial(number: string): void {
     console.log(`Dialing ${number}...`);
   }
 
-  setSpeakerVolume(volume: "low" | "high"): void {
+  setSpeakerVolume(volume: VolumeType): void {
     console.log(`Setting speaker volume to ${volume}...`);
   }
 }
@@ -19,8 +22,6 @@ export class USRModem extends Modem {
     console.log(`Dialing ${number} using USR modem...`);
   }
 }
-
-export type ModemTypes = "Hayes" | "USR";
 
 export class ModemControlProgram {
   private readonly users: Record<string, { user: User; modem: Modem }> = {};
@@ -73,7 +74,7 @@ export class QuietDialModem extends Modem {
 /**
  * Modem factory
  */
-export function createModem(speakerVolume: "low" | "high", modemType: ModemTypes = "Hayes"): Modem {
+export function createModem(speakerVolume: VolumeType, modemType: ModemTypes = "Hayes"): Modem {
   const baseModem = modemType === "Hayes" ? new HayesModem() : new USRModem();
   if (speakerVolume === "low") {
     return new QuietDialModem(baseModem);
@@ -83,7 +84,7 @@ export function createModem(speakerVolume: "low" | "high", modemType: ModemTypes
 }
 
 export class User {
-  constructor(public readonly name: string, public readonly speakerVolume: "low" | "high") {}
+  constructor(public readonly name: string, public readonly speakerVolume: VolumeType) {}
 
   dial(number: string, modemControlProgram: ModemControlProgram): void {
     const modem = createModem(this.speakerVolume, modemControlProgram.getModemType());
