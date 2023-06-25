@@ -1,17 +1,10 @@
 export class Calculator {
   public calculateSum(data: number[]): number {
-    let sum = 0;
-    for (const value of data) {
-      sum += value;
-    }
-    return sum;
+    return data.reduce((sum, value) => sum + value, 0);
   }
 
   public calculateAverage(sum: number, count: number): number {
-    if (count === 0) {
-      return 0;
-    }
-    return sum / count;
+    return count === 0 ? 0 : sum / count;
   }
 
   public getAverage(data: number[]): number {
