@@ -3,18 +3,27 @@
 Exploring design patterns in object-oriented design.
 
 ## Nice resources
-
-- Uncle Bob's Clean Coders Video Series:: https://learning.oreilly.com/videos/clean-code-fundamentals/9780134661742/
-  - Includes the course on Design Patterns.
-- Design patterns on Refactoring Guru: https://refactoring.guru/design-patterns
-  - Catalog with explanations, visualizations and code examples in many languages.
+- GoF Design Patterns book.
+- Uncle Bob's Clean Coders Video Series. (Includes the course on Design Patterns)
+- Uncle Bob's Patterns, Principles and Practices (PPP) book.
+- Design patterns on Refactoring Guru. (Catalog with explanations, visualizations and code examples in many languages. Although take note that the examples can be a bit too oversimplified at times.)
 
 ## Setup
 
-1. Clone the repo.
+Clone the repo and execute these inside the repo root:
+```
+yarn install
+yarn build
+```
 
-2. Run a terminal inside the repo root, and then execute these:
-   ```
-   yarn install
-   yarn build
-   ```
+## Other commands
+
+### To make sure all tests pass.
+```
+yarn test
+```
+
+### To make sure linter remains happy
+```
+yarn lint
+```
