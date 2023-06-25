@@ -15,9 +15,9 @@ Clone the repo and execute these inside the repo root:
 yarn install
 ```
 
-## Other commands
+## Other commands (all executed from the repo root)
 
-### To make sure all tests pass.
+### To make sure all tests pass
 ```
 yarn test
 ```
