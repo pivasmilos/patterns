@@ -1,4 +1,4 @@
-import { setup, teardown } from "../TestUtils/testUtils";
+import { setup, teardown } from "../testUtils";
 import { TextField, WordList, ScrollableList, DictionaryEntryMediator } from "./DictionaryEntryMediator";
 
 describe("DictionaryEntryMediator", () => {

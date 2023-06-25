@@ -1,4 +1,4 @@
-import { setup, teardown } from "../TestUtils/testUtils";
+import { setup, teardown } from "../testUtils";
 import { ConcretePullObserver, ConcretePullSubject, PullObserver, PullSubject } from "./v1PullObserver";
 import { ObservedPullSubject, ConcretePullObserverV2, PullSubjectV2, PullObserverV2 } from "./v2PullObserverDecoupled";
 import { PushObserver, ConcretePushObserver, ObservedPushSubject, PushSubject } from "./v3PushObserver";

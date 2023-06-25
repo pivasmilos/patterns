@@ -1,5 +1,3 @@
-import { mockConsoleLog, restoreConsoleLog } from "./mockConsoleLog";
-
 /**
  * Call this function in the beforeAll() function of your test suite.
  *
@@ -16,4 +14,14 @@ export function setup() {
  */
 export function teardown() {
   restoreConsoleLog();
+}
+
+const consoleLog = console.log;
+
+export function mockConsoleLog() {
+  console.log = jest.fn();
+}
+
+export function restoreConsoleLog() {
+  console.log = consoleLog;
 }

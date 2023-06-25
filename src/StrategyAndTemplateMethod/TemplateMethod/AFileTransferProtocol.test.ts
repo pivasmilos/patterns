@@ -1,4 +1,4 @@
-import { setup, teardown } from "../../TestUtils/testUtils";
+import { setup, teardown } from "../../testUtils";
 import { TcpFileTransferProtocol, UdpFileTransferProtocol } from "./AFileTransferProtocol";
 
 describe("Template Method pattern", () => {

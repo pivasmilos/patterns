@@ -1,4 +1,4 @@
-import { setup, teardown } from "../../TestUtils/testUtils";
+import { setup, teardown } from "../../testUtils";
 import { CommandScheduler } from "./CommandScheduler";
 import { PosixTime, Schedule } from "./Schedule";
 import { SimpleTimeScheduler } from "./SimpleTimeScheduler";

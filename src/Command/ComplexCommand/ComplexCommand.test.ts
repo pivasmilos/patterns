@@ -1,4 +1,4 @@
-import { setup, teardown } from "../../TestUtils/testUtils";
+import { setup, teardown } from "../../testUtils";
 import { ComplexCommand } from "./ComplexCommand";
 import { Receiver } from "./Receiver";
 

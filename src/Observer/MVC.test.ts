@@ -1,4 +1,4 @@
-import { setup, teardown } from "../TestUtils/testUtils";
+import { setup, teardown } from "../testUtils";
 import { Model, View, Controller } from "./MVC";
 
 describe("MVC", () => {

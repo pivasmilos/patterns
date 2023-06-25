@@ -1,4 +1,4 @@
-import { setup, teardown } from "../../TestUtils/testUtils";
+import { setup, teardown } from "../../testUtils";
 import { CommandsActor, Light, ButtonsListener, ButtonCommandWithActor } from "./ButtonCommandActorModel";
 
 describe("Actor Model with Command pattern", () => {

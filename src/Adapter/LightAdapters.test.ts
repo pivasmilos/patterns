@@ -1,4 +1,4 @@
-import { setup, teardown } from "../TestUtils/testUtils";
+import { setup, teardown } from "../testUtils";
 import { ThirdPartyLight, ObjectLightAdapter, Button, LightAdapterClass } from "./LightAdapters";
 
 describe("Adapter pattern", () => {

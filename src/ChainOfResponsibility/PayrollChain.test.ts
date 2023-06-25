@@ -1,4 +1,4 @@
-import { setup, teardown } from "../TestUtils/testUtils";
+import { setup, teardown } from "../testUtils";
 import { Payroll, Employee, PaymentSchedulerType, PaymentCalculatorType, PaymentDisposerType } from "./PayrollChain";
 
 const OriginalDate = Date;

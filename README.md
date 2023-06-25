@@ -2,6 +2,12 @@
 
 Exploring design patterns in object-oriented design.
 
+## Structure
+
+Patterns are in individual folders in ./src.
+
+Some folders contain multiple patterns - especially the FiniteStateMachines dir which includes a State Machine Compiler (SMC) which compiles State Transition Tables into code that implements the give state machine.
+
 ## Nice resources
 - GoF Design Patterns book.
 - Uncle Bob's Clean Coders Video Series. (Includes the course on Design Patterns)

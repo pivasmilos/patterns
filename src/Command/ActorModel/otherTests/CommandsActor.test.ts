@@ -1,4 +1,4 @@
-import { setup, teardown } from "../../../TestUtils/testUtils";
+import { setup, teardown } from "../../../testUtils";
 import { CommandsActor } from "../ButtonCommandActorModel";
 
 describe("Actor", () => {

@@ -1,4 +1,4 @@
-import { setup, teardown } from "../TestUtils/testUtils";
+import { setup, teardown } from "../testUtils";
 import { ModemControlProgram, User, createModem } from "./ModemDecorator";
 
 describe("Decorator pattern", () => {
