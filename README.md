@@ -13,7 +13,6 @@ Exploring design patterns in object-oriented design.
 Clone the repo and execute these inside the repo root:
 ```
 yarn install
-yarn build
 ```
 
 ## Other commands
@@ -26,4 +25,9 @@ yarn test
 ### To make sure linter remains happy
 ```
 yarn lint
+```
+
+### If you need the transpiled JavaScript 
+```
+yarn build
 ```
