@@ -1,14 +1,5 @@
 import { setup, teardown } from "../TestUtils/testUtils";
-import {
-  Payroll,
-  Employee,
-  MonthlyPaymentScheduler,
-  SalaryCalculator,
-  DirectDepositDisposer,
-  BiWeeklyPaymentScheduler,
-  HourlyCalculator,
-  MailDisposer,
-} from "./PayrollBridge";
+import { Payroll, Employee, PaymentSchedulerType, PaymentCalculatorType, PaymentDisposerType } from "./PayrollChain";
 
 const OriginalDate = Date;
 
@@ -22,7 +13,7 @@ function restoreMockDate() {
   global.Date = OriginalDate;
 }
 
-describe("Payroll Bridge", () => {
+describe("Payroll Chain of Responsibility", () => {
   const date = new Date("2022-01-31T00:00:00.000Z");
 
   beforeEach(() => {
@@ -38,9 +29,9 @@ describe("Payroll Bridge", () => {
   it("should pay monthly employees with direct deposit", () => {
     const employee = new Employee(
       "1",
-      new MonthlyPaymentScheduler(),
-      new SalaryCalculator(),
-      new DirectDepositDisposer()
+      PaymentSchedulerType.MONTHLY,
+      PaymentCalculatorType.SALARY,
+      PaymentDisposerType.DIRECT
     );
     const payroll = new Payroll([employee]);
 
@@ -58,9 +49,9 @@ describe("Payroll Bridge", () => {
   it("should pay bi-weekly employees with direct deposit", () => {
     const employee = new Employee(
       "2",
-      new BiWeeklyPaymentScheduler(),
-      new HourlyCalculator(),
-      new DirectDepositDisposer()
+      PaymentSchedulerType.BI_WEEKLY,
+      PaymentCalculatorType.HOURLY,
+      PaymentDisposerType.DIRECT
     );
     const payroll = new Payroll([employee]);
 
@@ -76,7 +67,12 @@ describe("Payroll Bridge", () => {
   });
 
   it("should pay monthly employees by mail", () => {
-    const employee = new Employee("3", new MonthlyPaymentScheduler(), new SalaryCalculator(), new MailDisposer());
+    const employee = new Employee(
+      "3",
+      PaymentSchedulerType.MONTHLY,
+      PaymentCalculatorType.SALARY,
+      PaymentDisposerType.MAIL
+    );
     const payroll = new Payroll([employee]);
 
     payroll.payday();
