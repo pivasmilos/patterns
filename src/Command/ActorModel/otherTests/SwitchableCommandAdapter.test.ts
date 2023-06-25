@@ -1,5 +1,4 @@
-import { Switchable } from "./Switchable";
-import { SwitchableCommandAdapter } from "./SwitchableCommandAdapter";
+import { Switchable, SwitchableCommandAdapter } from "../ButtonCommandActorModel";
 
 describe("SwitchableCommandAdapter.execute", () => {
   it("should turn on the switchable", () => {

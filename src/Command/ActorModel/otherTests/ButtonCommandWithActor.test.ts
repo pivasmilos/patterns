@@ -1,7 +1,5 @@
-import { setup, teardown } from "../../TestUtils/testUtils";
-import { ButtonCommandWithActor } from "./ButtonCommandWithActor";
-import { CommandsActor } from "./CommandsActor";
-import { Switchable } from "./Switchable";
+import { setup, teardown } from "../../../TestUtils/testUtils";
+import { CommandsActor, Switchable, ButtonCommandWithActor } from "../ButtonCommandActorModel";
 
 describe("ButtonCommandWithActor", () => {
   beforeEach(setup);
