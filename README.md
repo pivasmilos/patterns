@@ -10,7 +10,7 @@ Exploring design patterns in object-oriented design.
 
 ## Setup
 
-Clone the repo and execute these inside the repo root:
+Clone the repo and execute this inside the repo root:
 ```
 yarn install
 ```
