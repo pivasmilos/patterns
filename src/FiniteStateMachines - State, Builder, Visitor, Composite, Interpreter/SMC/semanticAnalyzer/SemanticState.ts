@@ -42,10 +42,11 @@ export class SemanticState implements Comparable<SemanticState> {
   }
 
   private makeStateNameWithAdornments(): string {
-    const stateName = this.isAbstractState ? `(${this.name})` : this.name;
-    const superStateNames = Array.from(this.superStates, (s) => `:${s.name}`);
-    const entryActionNames = this.entryActions.map((a) => `<${a}`);
-    const exitActionNames = this.exitActions.map((a) => `>${a}`);
+    const { name, isAbstractState, superStates, entryActions, exitActions } = this;
+    const stateName = isAbstractState ? `(${name})` : name;
+    const superStateNames = Array.from(superStates, (s) => `:${s.name}`);
+    const entryActionNames = entryActions.map((a) => `<${a}`);
+    const exitActionNames = exitActions.map((a) => `>${a}`);
     return [stateName, ...superStateNames, ...entryActionNames, ...exitActionNames].join(" ");
   }
 

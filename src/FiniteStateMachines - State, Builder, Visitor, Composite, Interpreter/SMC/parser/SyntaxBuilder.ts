@@ -4,15 +4,11 @@ import { ParserEvent } from "./ParserEvent";
 import { ParserState } from "./ParserState";
 
 export class SyntaxBuilder implements Builder {
-  private fsm: FsmSyntax;
+  private readonly fsm = new FsmSyntax();
   private header: Header = new Header();
   private parsedName = "";
   private transition = new Transition();
   private subtransition = new SubTransition();
-
-  constructor() {
-    this.fsm = new FsmSyntax();
-  }
 
   public newHeaderWithName(): void {
     this.header = new Header();

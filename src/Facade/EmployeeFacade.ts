@@ -1,5 +1,5 @@
 export class EmployeeFacade {
-  constructor(private policy: EmployeePolicy, private gateway: EmployeeGateway, private reports: EmployeeReports) {}
+  constructor(private readonly policy: EmployeePolicy, private readonly gateway: EmployeeGateway, private readonly reports: EmployeeReports) {}
 
   public save(): string {
     return this.gateway.save();

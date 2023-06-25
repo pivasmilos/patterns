@@ -13,17 +13,14 @@ export interface PushObserverSubject {
 export interface PushSubject extends PushObserverSubject, BusinessLogic {}
 
 export class PushSubjectImpl implements PushObserverSubject {
-  private observers: PushObserver[] = [];
+  private readonly observers = new Set<PushObserver>();
 
   public addObserver(observer: PushObserver): void {
-    this.observers.push(observer);
+    this.observers.add(observer);
   }
 
   public removeObserver(observer: PushObserver): void {
-    const index = this.observers.indexOf(observer);
-    if (index !== -1) {
-      this.observers.splice(index, 1);
-    }
+    this.observers.delete(observer);
   }
 
   public notifyObservers(message: string): void {
@@ -34,7 +31,7 @@ export class PushSubjectImpl implements PushObserverSubject {
 }
 
 export class ObservedPushSubject implements PushSubject {
-  private subject: PushSubjectImpl = new PushSubjectImpl();
+  private readonly subject: PushSubjectImpl = new PushSubjectImpl();
   private message = "";
 
   public addObserver(observer: PushObserver): void {
@@ -60,11 +57,7 @@ export class ObservedPushSubject implements PushSubject {
 }
 
 export class ConcretePushObserver implements PushObserver {
-  private name: string;
-
-  constructor(name: string) {
-    this.name = name;
-  }
+  constructor(private readonly name: string) {}
 
   public update(message: string): void {
     console.log(`${this.name} received message: ${message}`);

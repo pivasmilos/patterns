@@ -38,10 +38,10 @@ export interface Actor {
  */
 export class ButtonCommandWithActor implements Command {
   constructor(
-    private actor: Actor,
-    private buttonListener: ButtonsListener,
-    private string: string,
-    private switchable: Switchable
+    private readonly actor: Actor,
+    private readonly buttonListener: ButtonsListener,
+    private readonly string: string,
+    private readonly switchable: Switchable
   ) {}
 
   public execute(): void {
@@ -56,7 +56,7 @@ export class ButtonCommandWithActor implements Command {
 }
 
 export class CommandsActor implements Actor {
-  private commands: Command[] = [];
+  private readonly commands: Command[] = [];
 
   public addCommand(command: Command): void {
     this.commands.push(command);
@@ -72,7 +72,7 @@ export class CommandsActor implements Actor {
 }
 
 export class SwitchableCommandAdapter implements Command {
-  constructor(private switchable: Switchable) {}
+  constructor(private readonly switchable: Switchable) {}
 
   public execute(): void {
     this.switchable.turnOn();
@@ -80,7 +80,7 @@ export class SwitchableCommandAdapter implements Command {
 }
 
 export class Light implements Switchable {
-  constructor(private label: string = "") {}
+  constructor(private readonly label: string = "") {}
 
   turnOn(): void {
     console.log(`SimpleLight: Light is on! Label: ${this.label}`);

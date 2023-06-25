@@ -9,13 +9,13 @@ export class Header {
     return hash(name + value);
   }
 
-  equals(other: Header): boolean {
-    return this.name === other.name && this.value === other.value;
+  equals({ name, value }: Header): boolean {
+    return this.name === name && this.value === value;
   }
 }
 
 export class Transition {
-  public state: StateSpec = new StateSpec();
+  public state = new StateSpec();
   public subTransitions: SubTransition[] = [];
 }
 
@@ -46,7 +46,7 @@ export class SyntaxError {
   constructor(public type: ErrorType, public msg: string, public line: number, public position: number) {}
 
   public toString() {
-    return `Syntax error: ${this.type.toString()}. ${this.msg}. line ${this.line}, position ${this.position}.\n`;
+    return `Syntax error: ${this.type}. ${this.msg}. line ${this.line}, position ${this.position}.\n`;
   }
 }
 
@@ -55,11 +55,11 @@ export class FsmSyntax {
     public headers: Header[] = [],
     public logic: Transition[] = [],
     public errors: SyntaxError[] = [],
-    public done: boolean = false
+    public done = false
   ) {}
 
   public toString(): string {
-    return this.formatHeaders() + this.formatLogic() + (this.done ? ".\n" : "") + this.getFirstError();
+    return `${this.formatHeaders()}${this.formatLogic()}${this.done ? ".\n" : ""}${this.getFirstError()}`;
   }
 
   public getError(): string {
@@ -67,27 +67,22 @@ export class FsmSyntax {
   }
 
   private formatHeaders(): string {
-    return this.headers.map((h) => this.formatHeader(h)).join("");
+    return this.headers.map((h) => `${this.formatHeader(h)}\n`).join("");
   }
 
-  private formatHeader(h: Header): string {
-    return `${h.name}:${h.value}\n`;
+  private formatHeader({ name, value }: Header): string {
+    return `${name}:${value}`;
   }
 
   private formatLogic(): string {
     if (this.logic.length === 0) {
       return "";
     }
-    return `{\n${this.formatTransitions()}}\n`;
+    return `{\n${this.logic.map((t) => this.formatTransition(t)).join("")}}\n`;
   }
 
-  private formatTransitions(): string {
-    const transitions = this.logic.map((t) => this.formatTransition(t)).join("");
-    return transitions;
-  }
-
-  private formatTransition(transition: Transition): string {
-    return `  ${this.formatStateName(transition.state)} ${this.formatSubTransitions(transition)}\n`;
+  private formatTransition({ state, subTransitions }: Transition): string {
+    return `  ${this.formatStateName(state)} ${this.formatSubTransitions(subTransitions)}\n`;
   }
 
   private formatStateName({ name, isAbstractState, superStates, entryActions, exitActions }: StateSpec): string {
@@ -98,9 +93,9 @@ export class FsmSyntax {
     return stateName + superStatesStr + entryActionsStr + exitActionsStr;
   }
 
-  private formatSubTransitions(transition: Transition): string {
-    if (transition.subTransitions.length === 1) {
-      const st = transition.subTransitions[0];
+  private formatSubTransitions(subTransitions: SubTransition[]): string {
+    if (subTransitions.length === 1) {
+      const st = subTransitions[0];
       if (!st) {
         return "";
       }
@@ -108,18 +103,18 @@ export class FsmSyntax {
       return this.formatSubTransition(st);
     }
 
-    const subTransitions = transition.subTransitions.map((st) => `    ${this.formatSubTransition(st)}\n`).join("");
-    return `{\n${subTransitions}  }`;
+    const subTransitionsStr = subTransitions.map((st) => `    ${this.formatSubTransition(st)}\n`).join("");
+    return `{\n${subTransitionsStr}  }`;
   }
 
-  private formatSubTransition(subTransition: SubTransition): string {
-    return `${subTransition.event} ${subTransition.nextState} ${this.formatActions(subTransition)}`;
+  private formatSubTransition({ event, nextState, actions }: SubTransition): string {
+    return `${event} ${nextState} ${this.formatActions(actions)}`;
   }
 
-  private formatActions(subTransition: SubTransition): string {
-    const actions = subTransition.actions.join(" ");
+  private formatActions(actions: string[]): string {
+    const actionsStr = actions.join(" ");
 
-    return subTransition.actions.length === 1 ? actions : `{${actions}}`;
+    return actions.length === 1 ? actionsStr : `{${actionsStr}}`;
   }
 
   private getFirstError(): string {
@@ -131,7 +126,7 @@ export class FsmSyntax {
     return this.formatError(firstError);
   }
 
-  private formatError(e: SyntaxError): string {
-    return e.toString();
+  private formatError(error: SyntaxError): string {
+    return error.toString();
   }
 }

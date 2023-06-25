@@ -5,7 +5,13 @@ import { PolarSquare } from "../Shapes/Polar/PolarSquare";
 import { Shape } from "../Shapes/Shape";
 
 /**
- * Provides an interface for creating families of related or dependent objects without specifying their concrete classes.
+ * Provides an interface for creating families of related or dependent objects
+ * without specifying their concrete classes.
+ *
+ * Notice, though, that whenever we add a new shape,
+ * we would have to **recompile and redeploy the ShapeFactory interface
+ * and all of the factories that implement the interface,
+ * even if we don't need the new shape in some or all of the factories**.
  */
 export interface ShapeFactory {
   makeCircle(): Shape;

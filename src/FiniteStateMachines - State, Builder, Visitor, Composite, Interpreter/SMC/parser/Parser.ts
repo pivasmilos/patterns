@@ -31,11 +31,8 @@ import { ParserTransition as PT } from "./ParserTransition";
 
 export class Parser implements TokenCollector {
   private state: PS = PS.HEADER;
-  private builder: Builder;
 
-  constructor(builder: Builder) {
-    this.builder = builder;
-  }
+  constructor(private readonly builder: Builder) {}
 
   public openBrace(line: number, pos: number): void {
     this.handleEvent(PE.OPEN_BRACE, line, pos);
@@ -133,7 +130,7 @@ export class Parser implements TokenCollector {
     }
   }
 
-  private transitions: PT[] = [
+  private readonly transitions: PT[] = [
     new PT(PS.HEADER, PE.NAME, PS.HEADER_COLON, (t) => t.newHeaderWithName()),
     new PT(PS.HEADER, PE.OPEN_BRACE, PS.STATE_SPEC, null),
     new PT(PS.HEADER_COLON, PE.COLON, PS.HEADER_VALUE, null),

@@ -4,6 +4,15 @@ import { PolarCircle } from "../Shapes/Polar/PolarCircle";
 import { PolarSquare } from "../Shapes/Polar/PolarSquare";
 import { Shape } from "../Shapes/Shape";
 
+/**
+ * With this approach, we have sacrificed type safety for independent deployability.
+ *
+ * Whenever we add a new shape, we don't have to change the ShapeFactory interface
+ * => we don't have to recompile and redeploy all of the existing factories.
+ *
+ * Quasi-type-safety can be achieved with proper unit tests, though.
+ * So there is no real downside to this approach.
+ */
 export interface ShapeFactory {
   makeShape(shapeName: string): Shape;
   getShapeNames(): string[];

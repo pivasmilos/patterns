@@ -4,7 +4,7 @@ export interface Switchable {
 }
 
 export class ThirdPartyLight {
-  constructor(private color: string = "white") {}
+  constructor(private readonly color: string = "white") {}
 
   public turnOnLight() {
     console.log(`Third party ${this.color} light is on`);
@@ -32,11 +32,7 @@ export class Button implements Switchable {
 }
 
 export class ObjectLightAdapter implements Switchable {
-  private light: ThirdPartyLight;
-
-  constructor(light: ThirdPartyLight) {
-    this.light = light;
-  }
+  constructor(private light: ThirdPartyLight) {}
 
   public turnOn() {
     this.light.turnOnLight();

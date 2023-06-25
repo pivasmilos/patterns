@@ -4,11 +4,10 @@ interface Observer {
 
 export class Model {
   private data: string;
-  private observers: Observer[];
+  private readonly observers = new Set<Observer>();
 
   constructor() {
     this.data = "";
-    this.observers = [];
   }
 
   public getData(): string {
@@ -21,14 +20,11 @@ export class Model {
   }
 
   public addObserver(observer: Observer): void {
-    this.observers.push(observer);
+    this.observers.add(observer);
   }
 
   public removeObserver(observer: Observer): void {
-    const index = this.observers.indexOf(observer);
-    if (index !== -1) {
-      this.observers.splice(index, 1);
-    }
+    this.observers.delete(observer);
   }
 
   private notifyObservers(): void {
@@ -39,10 +35,7 @@ export class Model {
 }
 
 export class View implements Observer {
-  private readonly model: Model;
-
-  constructor(model: Model) {
-    this.model = model;
+  constructor(private readonly model: Model) {
     this.model.addObserver(this);
   }
 
@@ -52,11 +45,7 @@ export class View implements Observer {
 }
 
 export class Controller {
-  private readonly model: Model;
-
-  constructor(model: Model) {
-    this.model = model;
-  }
+  constructor(private readonly model: Model) {}
 
   public updateData(data: string): void {
     this.model.setData(data);

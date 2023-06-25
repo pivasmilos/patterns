@@ -8,7 +8,7 @@ export type PosixTime = number;
  */
 
 export class Schedule {
-  constructor(private date: Date) {}
+  constructor(private readonly date: Date) {}
 
   public get executionTime(): PosixTime {
     return this.date.getTime();

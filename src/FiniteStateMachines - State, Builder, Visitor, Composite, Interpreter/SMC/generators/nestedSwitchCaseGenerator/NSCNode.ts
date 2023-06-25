@@ -37,7 +37,7 @@ export class FunctionCallNode implements NSCNode {
 }
 
 export class CompositeNode implements NSCNode {
-  private nodes: NSCNode[] = [];
+  private readonly nodes: NSCNode[] = [];
 
   public accept(visitor: NSCNodeVisitor): void {
     for (const node of this.nodes) {

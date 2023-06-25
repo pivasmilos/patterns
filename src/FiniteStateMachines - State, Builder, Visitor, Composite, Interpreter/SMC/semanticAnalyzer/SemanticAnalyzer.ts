@@ -8,9 +8,9 @@ import { AnalysisError, AnalysisErrorID } from "./AnalysisError";
 export class SemanticAnalyzer {
   // non-null assertion is safe because analyze() is the only public method and it initializes this right away
   private semanticStateMachine!: SemanticStateMachine;
-  private fsmHeader: Header = new Header();
-  private actionsHeader: Header = new Header();
-  private initialHeader: Header = new Header();
+  private readonly fsmHeader: Header = new Header();
+  private readonly actionsHeader: Header = new Header();
+  private readonly initialHeader: Header = new Header();
 
   public analyze(fsm: FsmSyntax): SemanticStateMachine {
     this.semanticStateMachine = new SemanticStateMachine();
@@ -330,7 +330,7 @@ class SuperClassCrawler {
   private concreteState: SemanticState | null = null;
 
   constructor(
-    private semanticStateMachine: SemanticStateMachine,
+    private readonly semanticStateMachine: SemanticStateMachine,
     private transitionTuples: Map<string, TransitionTuple> = new Map()
   ) {}
 

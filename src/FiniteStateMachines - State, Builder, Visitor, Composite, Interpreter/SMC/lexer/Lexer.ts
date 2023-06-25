@@ -1,13 +1,10 @@
 import { TokenCollector } from "./TokenCollector";
 
 export class Lexer {
-  private collector: TokenCollector;
   private lineNumber = 0;
   private position = 0;
 
-  constructor(collector: TokenCollector) {
-    this.collector = collector;
-  }
+  constructor(private readonly collector: TokenCollector) {}
 
   public lex(s: string): void {
     this.lineNumber = 1;
@@ -35,9 +32,9 @@ export class Lexer {
     return this.findWhiteSpace(line) || this.findSingleCharacterToken(line) || this.findName(line);
   }
 
-  private static whitePattern = /^\s+/;
-  private static commentPattern = /^\/\/.*$/;
-  private static whitePatterns: RegExp[] = [Lexer.whitePattern, Lexer.commentPattern];
+  private static readonly whitePattern = /^\s+/;
+  private static readonly commentPattern = /^\/\/.*$/;
+  private static readonly whitePatterns: RegExp[] = [Lexer.whitePattern, Lexer.commentPattern];
 
   private findWhiteSpace(line: string): boolean {
     for (const pattern of Lexer.whitePatterns) {
@@ -88,7 +85,7 @@ export class Lexer {
     return true;
   }
 
-  private static namePattern = /^\w+/;
+  private static readonly namePattern = /^\w+/;
 
   private findName(line: string): boolean {
     const nameMatcher = line.substring(this.position).match(Lexer.namePattern);
@@ -96,8 +93,9 @@ export class Lexer {
       return false;
     }
 
-    this.collector.name(nameMatcher[0], this.lineNumber, this.position);
-    this.position += nameMatcher[0].length;
+    const name = nameMatcher[0];
+    this.collector.name(name, this.lineNumber, this.position);
+    this.position += name.length;
     return true;
   }
 }

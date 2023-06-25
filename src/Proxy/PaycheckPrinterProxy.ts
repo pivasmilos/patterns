@@ -14,7 +14,7 @@ export interface HardwarePrinter {
 }
 
 export class PaycheckPrinterProxy implements PaycheckPrinter {
-  constructor(private networkAPI: NotificationAPI) {}
+  constructor(private readonly networkAPI: NotificationAPI) {}
 
   public printPaycheckMessage(message: string): void {
     this.networkAPI.sendNotification(`Printing paycheck message: ${message}`);
@@ -22,7 +22,7 @@ export class PaycheckPrinterProxy implements PaycheckPrinter {
 }
 
 export class NetworkAPI implements NotificationAPI {
-  private listeners: ((message: string) => void)[] = [];
+  private readonly listeners: ((message: string) => void)[] = [];
 
   public sendNotification(message: string): void {
     console.log(`Sending notification: ${message}`);
@@ -35,7 +35,7 @@ export class NetworkAPI implements NotificationAPI {
 }
 
 export class PaycheckPrinterListener implements PaycheckPrinter {
-  constructor(private networkAPI: NotificationAPI, private realPaycheckPrinter: PaycheckPrinter) {
+  constructor(private readonly networkAPI: NotificationAPI, private readonly realPaycheckPrinter: PaycheckPrinter) {
     this.networkAPI.addListener((message) => this.onPaycheckPrinted(message));
   }
 
@@ -50,7 +50,7 @@ export class PaycheckPrinterListener implements PaycheckPrinter {
 }
 
 export class RealPaycheckPrinter implements PaycheckPrinter {
-  constructor(private hardwarePrinter: HardwarePrinter) {
+  constructor(private readonly hardwarePrinter: HardwarePrinter) {
     this.hardwarePrinter.configure();
   }
 

@@ -12,10 +12,11 @@ export class SemanticStateMachine {
   public fsmName: string | null = null;
 
   public toString(): string {
+    const { actionClass, fsmName, initialState } = this;
     return [
-      `Actions: ${this.actionClass}`,
-      `FSM: ${this.fsmName}`,
-      `Initial: ${this.initialState?.name ?? null}`,
+      `Actions: ${actionClass}`,
+      `FSM: ${fsmName}`,
+      `Initial: ${initialState?.name ?? null}`,
       this.statesToString(),
     ].join("\n");
   }
@@ -25,9 +26,7 @@ export class SemanticStateMachine {
   }
 
   public statesToString(): string {
-    const states = Array.from(this.states.values())
-      .map((s) => s.toString())
-      .join("");
-    return `{${states}}\n`;
+    const states = Array.from(this.states.values());
+    return `{${states.join("")}}\n`;
   }
 }

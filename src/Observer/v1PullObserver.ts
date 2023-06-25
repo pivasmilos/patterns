@@ -5,17 +5,14 @@ export interface PullObserver {
 }
 
 export abstract class PullSubject implements BusinessLogic {
-  private observers: PullObserver[] = [];
+  private readonly observers = new Set<PullObserver>();
 
   public addObserver(observer: PullObserver): void {
-    this.observers.push(observer);
+    this.observers.add(observer);
   }
 
   public removeObserver(observer: PullObserver): void {
-    const index = this.observers.indexOf(observer);
-    if (index !== -1) {
-      this.observers.splice(index, 1);
-    }
+    this.observers.delete(observer);
   }
 
   public notifyObservers(): void {
@@ -27,15 +24,8 @@ export abstract class PullSubject implements BusinessLogic {
   abstract setMessage(message: string): void;
   abstract getMessage(): string;
 }
-
 export class ConcretePullObserver implements PullObserver {
-  private name: string;
-  private subject: PullSubject;
-
-  constructor(name: string, subject: PullSubject) {
-    this.name = name;
-    this.subject = subject;
-  }
+  constructor(private readonly name: string, private readonly subject: PullSubject) {}
 
   public update(): void {
     console.log(`${this.name} received message: ${this.subject.getMessage()}`);

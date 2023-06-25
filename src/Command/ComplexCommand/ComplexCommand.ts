@@ -12,7 +12,7 @@ import { Command } from "../Command";
  * @see Receiver
  */
 export class ComplexCommand implements Command {
-  constructor(private receiver: Receiver, private receiverArgs: ReceiverArgs) {}
+  constructor(private readonly receiver: Receiver, private readonly receiverArgs: ReceiverArgs) {}
 
   public execute(): void {
     /**

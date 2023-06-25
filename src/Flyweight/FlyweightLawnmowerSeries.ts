@@ -8,11 +8,7 @@ export interface LawnmowerSeriesData {
 }
 
 export class FlyweightLawnmowerSeries {
-  private data: LawnmowerSeriesData;
-
-  constructor(id: string, model: string, manufacturer: string, weight: number, price: number, picture: string) {
-    this.data = { id, model, manufacturer, weight, price, picture };
-  }
+  constructor(private readonly data: LawnmowerSeriesData) {}
 
   public getData(): LawnmowerSeriesData {
     return this.data;
@@ -20,29 +16,29 @@ export class FlyweightLawnmowerSeries {
 }
 
 export class Lawnmower {
-  constructor(private readonly serialNumber: string, private readonly series: FlyweightLawnmowerSeries) {}
+  constructor(private readonly _serialNumber: string, private readonly series: FlyweightLawnmowerSeries) {}
 
-  public getSerialNumber(): string {
-    return this.serialNumber;
+  public get serialNumber(): string {
+    return this._serialNumber;
   }
 
-  public getManufacturer(): string {
+  public get manufacturer(): string {
     return this.series.getData().manufacturer;
   }
 
-  public getModel(): string {
+  public get model(): string {
     return this.series.getData().model;
   }
 
-  public getWeight(): number {
+  public get weight(): number {
     return this.series.getData().weight;
   }
 
-  public getPrice(): number {
+  public get price(): number {
     return this.series.getData().price;
   }
 
-  public getPicture(): string {
+  public get picture(): string {
     return this.series.getData().picture;
   }
 }
@@ -50,8 +46,8 @@ export class Lawnmower {
 export class LawnmowerStore {
   // we could store a million lawnmowers in this store and it would only take up a few megabytes of memory
   // (unless they are all of different series)
-  private serialNumbers = new Set<string>();
-  private seriesMap = new Map<string, FlyweightLawnmowerSeries>();
+  private readonly serialNumbers = new Set<string>();
+  private readonly seriesMap = new Map<string, FlyweightLawnmowerSeries>();
 
   public getLawnmower(serialNumber: string, seriesID: string): Lawnmower | undefined {
     if (!this.serialNumbers.has(serialNumber)) {
@@ -77,6 +73,9 @@ export class LawnmowerStore {
     picture: string
   ): void {
     this.serialNumbers.add(serialNumber);
-    this.seriesMap.set(seriesID, new FlyweightLawnmowerSeries(seriesID, model, manufacturer, weight, price, picture));
+    this.seriesMap.set(
+      seriesID,
+      new FlyweightLawnmowerSeries({ id: seriesID, model, manufacturer, weight, price, picture })
+    );
   }
 }

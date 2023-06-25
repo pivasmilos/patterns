@@ -13,11 +13,9 @@ import { NSCNodeVisitor } from "../generators/nestedSwitchCaseGenerator/NSCNodeV
 
 export class JavaNestedSwitchCaseImplementer implements NSCNodeVisitor {
   private output = "";
-  private flags: Map<string, string>;
-  private javaPackage?: string;
+  private readonly javaPackage?: string;
 
-  constructor(flags: Map<string, string>) {
-    this.flags = flags;
+  constructor(private readonly flags: Map<string, string>) {
     if (this.flags.has("package")) {
       this.javaPackage = this.flags.get("package");
     }
@@ -46,8 +44,9 @@ export class JavaNestedSwitchCaseImplementer implements NSCNodeVisitor {
   }
 
   public visitStatePropertyNode(node: StatePropertyNode): void {
-    this.output += `private State state = State.${node.initialState};\n`;
-    this.output += "private void setState(State s) {state = s;}\n";
+    this.output += //
+      `private State state = State.${node.initialState};\n` + //
+      "private void setState(State s) {state = s;}\n";
   }
 
   public visitEventDelegatorsNode(node: EventDelegatorsNode): void {
@@ -57,18 +56,18 @@ export class JavaNestedSwitchCaseImplementer implements NSCNodeVisitor {
   }
 
   public visitFSMClassNode(node: FSMClassNode): void {
+    const { className, actionsName, actions } = node;
     if (this.javaPackage) {
       this.output += `package ${this.javaPackage};\n`;
     }
 
-    const actionsName = node.actionsName;
     if (!actionsName) {
-      this.output += `public abstract class ${node.className} {\n`;
-      for (const action of node.actions) {
+      this.output += `public abstract class ${className} {\n`;
+      for (const action of actions) {
         this.output += `protected abstract void ${action}();\n`;
       }
     } else {
-      this.output += `public abstract class ${node.className} implements ${actionsName} {\n`;
+      this.output += `public abstract class ${className} implements ${actionsName} {\n`;
       // no need to declare abstract actions, they are implicitly declared through the interface
     }
 

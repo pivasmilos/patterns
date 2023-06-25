@@ -20,17 +20,14 @@ export interface PullObserverSubject {
 export interface PullSubjectV2 extends PullObserverSubject, BusinessLogic {}
 
 export class PullSubjectImpl implements PullObserverSubject {
-  private observers: PullObserverV2[] = [];
+  private readonly observers = new Set<PullObserverV2>();
 
   public addObserver(observer: PullObserverV2): void {
-    this.observers.push(observer);
+    this.observers.add(observer);
   }
 
   public removeObserver(observer: PullObserverV2): void {
-    const index = this.observers.indexOf(observer);
-    if (index !== -1) {
-      this.observers.splice(index, 1);
-    }
+    this.observers.delete(observer);
   }
 
   public notifyObservers(): void {
@@ -41,7 +38,7 @@ export class PullSubjectImpl implements PullObserverSubject {
 }
 
 export class ObservedPullSubject implements PullSubjectV2 {
-  private subject: PullSubjectImpl = new PullSubjectImpl();
+  private readonly subject = new PullSubjectImpl();
   private message = "";
 
   public addObserver(observer: PullObserverV2): void {
@@ -67,13 +64,7 @@ export class ObservedPullSubject implements PullSubjectV2 {
 }
 
 export class ConcretePullObserverV2 implements PullObserverV2 {
-  private name: string;
-  private subject: PullSubjectV2;
-
-  constructor(name: string, subject: PullSubjectV2) {
-    this.name = name;
-    this.subject = subject;
-  }
+  constructor(private readonly name: string, private readonly subject: PullSubjectV2) {}
 
   public update(): void {
     console.log(`${this.name} received message: ${this.subject.getMessage()}`);

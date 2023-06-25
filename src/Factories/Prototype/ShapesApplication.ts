@@ -32,6 +32,7 @@ export class SquarePrototype extends ShapePrototype {
   }
 }
 
+// might live in e.g. PrototypeLibrary.ts
 export const circlePrototype: ShapePrototype = new CirclePrototype();
 export const squarePrototype: ShapePrototype = new SquarePrototype();
 

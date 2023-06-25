@@ -11,11 +11,7 @@ export class DictionaryApplication {
 }
 
 export class DictionaryEntryMediator {
-  constructor(private textField: TextField, private wordList: WordList, private scrollableList: ScrollableList) {
-    this.textField = textField;
-    this.wordList = wordList;
-    this.scrollableList = scrollableList;
-
+  constructor(private readonly textField: TextField, private readonly wordList: WordList, private readonly scrollableList: ScrollableList) {
     this.textField.addListener((input) => {
       const words = this.wordList.lookup(input);
       this.scrollableList.display(words);
@@ -24,7 +20,7 @@ export class DictionaryEntryMediator {
 }
 
 export class TextField {
-  private listeners: ((input: string) => void)[] = [];
+  private readonly listeners: ((input: string) => void)[] = [];
 
   public addListener(listener: (input: string) => void): void {
     this.listeners.push(listener);

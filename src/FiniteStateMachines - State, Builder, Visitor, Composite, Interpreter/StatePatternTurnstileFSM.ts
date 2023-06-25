@@ -33,6 +33,7 @@ type StateMap = Record<State, TurnstileState>;
 export abstract class ATurnstileState implements TurnstileState {
   private static _stateMap: StateMap;
 
+  // These are the State objects:
   static {
     const locked: ATurnstileState = {
       handleEvent(event: Event, turnstileFSM: TurnstileFsmWithState): void {

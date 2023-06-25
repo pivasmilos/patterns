@@ -7,9 +7,9 @@ import { TimeScheduler } from "./TimeScheduler";
  */
 export class CommandScheduler implements Command {
   constructor(
-    private schedule: Schedule,
-    private commands: Command[],
-    private timeScheduler: TimeScheduler
+    private readonly schedule: Schedule,
+    private readonly commands: Command[],
+    private readonly timeScheduler: TimeScheduler
   ) {}
 
   public execute(): void {

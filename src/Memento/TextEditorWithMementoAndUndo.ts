@@ -14,7 +14,7 @@ interface Undoable {
 
 // Notice that Memento provides no *public* API for getting or setting state
 export class TextEditorMemento {
-  private stateMetadata: string;
+  private readonly stateMetadata: string;
 
   protected constructor(state: string) {
     this.stateMetadata = this.getMetadataFromState(state);
@@ -60,9 +60,9 @@ export class TextEditorWithMemento extends TextEditorMemento implements TextEdit
 // Notice that TextEditorWithUndo knows nothing about what's inside the memento.
 // TextEditorWithMemento can hold a lot of complex state but TextEditorWithUndo knows only the public stuff.
 export class TextEditorWithUndo implements TextEditor, Undoable {
-  private history: TextEditorMemento[] = [];
+  private readonly history: TextEditorMemento[] = [];
 
-  constructor(private editor: TextEditorWithMemento) {}
+  constructor(private readonly editor: TextEditorWithMemento) {}
 
   public setText(text: string): void {
     this.rememberCurrentState();

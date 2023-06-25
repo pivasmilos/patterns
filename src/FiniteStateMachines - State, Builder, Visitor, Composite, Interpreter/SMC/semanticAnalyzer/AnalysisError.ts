@@ -1,13 +1,7 @@
 import { hash } from "../utilities";
 
 export class AnalysisError {
-  public id: AnalysisErrorID;
-  public extra?: unknown;
-
-  public constructor(id: AnalysisErrorID, extra?: unknown) {
-    this.id = id;
-    this.extra = extra;
-  }
+  public constructor(public id: AnalysisErrorID, public extra?: unknown) {}
 
   public toString(): string {
     return `Semantic Error: ${this.id}(${this.extra})`;

@@ -26,7 +26,7 @@ export class USRModem extends Modem {
 export class ModemControlProgram {
   private readonly users: Record<string, { user: User; modem: Modem }> = {};
 
-  constructor(private modemType: ModemTypes) {}
+  constructor(private readonly modemType: ModemTypes) {}
 
   public getModemType(): ModemTypes {
     return this.modemType;

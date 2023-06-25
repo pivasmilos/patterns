@@ -52,16 +52,14 @@ export function main(args: string[]): void {
 }
 
 class SmcCompiler {
-  private file: string;
-  private outputDirectory: string | undefined = undefined;
-  private language = "Java";
-  private flags: Flags = new Map();
+  private readonly outputDirectory: string | undefined = undefined;
+  private readonly language: string = "java";
+  private readonly flags: Flags = new Map();
   private syntaxBuilder: SyntaxBuilder = new SyntaxBuilder();
   private parser: Parser = new Parser(this.syntaxBuilder);
   private lexer: Lexer = new Lexer(this.parser);
 
-  constructor(file: string, outputDirectory: string | undefined, language: string, flags: string[]) {
-    this.file = file;
+  constructor(private readonly file: string, outputDirectory: string | undefined, language: string, flags: string[]) {
     this.outputDirectory = outputDirectory;
     this.language = language;
     for (const flag of flags) {

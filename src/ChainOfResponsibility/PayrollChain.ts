@@ -31,7 +31,7 @@ export interface Paycheck {
 }
 
 export abstract class PaycheckStation {
-  constructor(private nextStation?: PaycheckStation) {}
+  constructor(private readonly nextStation?: PaycheckStation) {}
 
   public handlePaycheck(paycheck: Paycheck): void {
     const shouldContinue = this.doPaycheck(paycheck);
@@ -162,7 +162,7 @@ export class MailDisposer extends PaymentDisposer {
 }
 
 export class Payroll {
-  constructor(private employees: Employee[]) {}
+  constructor(private readonly employees: Employee[]) {}
 
   payday(): void {
     const startingPaycheckStation = this.buildTheChain();

@@ -17,8 +17,8 @@ export const NullEmployee: Employee = {
 } as const;
 
 export class EmployeeDatabase {
-  private employees: Employee[] = [];
-  private oneTimeBonus: number;
+  private readonly employees: Employee[] = [];
+  private readonly oneTimeBonus: number;
 
   constructor(oneTimeBonus = 0) {
     this.oneTimeBonus = oneTimeBonus;
@@ -29,15 +29,13 @@ export class EmployeeDatabase {
   }
 
   public getEmployeeById(id: number): Employee {
-    const employee = this.employees.find((e) => e.id === id);
-    return employee ? employee : NullEmployee;
+    return this.employees.find((e) => e.id === id) ?? NullEmployee;
   }
 
   public calculateTotalPayedAmount(): number {
-    return this.employees.reduce(
-      (total, employee) =>
-        total + employee.salary * employee.tenure + (employee.canReceiveBonuses ? this.oneTimeBonus : 0),
-      0
-    );
+    return this.employees.reduce((total, { salary, tenure, canReceiveBonuses }) => {
+      const bonus = canReceiveBonuses ? this.oneTimeBonus : 0;
+      return total + salary * tenure + bonus;
+    }, 0);
   }
 }

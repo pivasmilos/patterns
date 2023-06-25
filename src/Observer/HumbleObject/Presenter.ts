@@ -22,13 +22,9 @@ export class Calculator {
 }
 
 export class Presenter {
-  private readonly data: number[];
-  private readonly calculator: Calculator;
+  private readonly calculator = new Calculator();
 
-  constructor(data: number[]) {
-    this.data = data;
-    this.calculator = new Calculator();
-  }
+  constructor(private readonly data: number[]) {}
 
   public displayData(): void {
     const average = this.calculator.getAverage(this.data);

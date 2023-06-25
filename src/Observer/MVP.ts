@@ -32,13 +32,7 @@ interface FromStringable {
 }
 
 export class View {
-  private readonly inputElement: ToStringable;
-  private readonly outputElement: FromStringable;
-
-  constructor(inputElement: ToStringable, outputElement: FromStringable) {
-    this.inputElement = inputElement;
-    this.outputElement = outputElement;
-  }
+  constructor(private readonly inputElement: ToStringable, private readonly outputElement: FromStringable) {}
 
   public getInputValue(): string {
     return this.inputElement.toString();
@@ -50,13 +44,7 @@ export class View {
 }
 
 export class Presenter {
-  private readonly model: Model<string>;
-  private readonly view: View;
-
-  constructor(model: Model<string>, view: View) {
-    this.model = model;
-    this.view = view;
-  }
+  constructor(private readonly model: Model<string>, private readonly view: View) {}
 
   public handleInputChange(): void {
     const inputValue = this.view.getInputValue();

@@ -4,7 +4,11 @@
 
 export class Singleton {
   private static instance: Singleton | null;
-  private static data = "some data";
+  private static readonly data = "some data";
+
+  private constructor() {
+    // prevent construction
+  }
 
   public static getInstance(): Singleton {
     /**
@@ -13,10 +17,7 @@ export class Singleton {
      * resulting in multiple instances of the Singleton being created.
      * However, in JavaScript, this is not a concern because JavaScript is single-threaded.
      */
-    if (!Singleton.instance) {
-      Singleton.instance = new Singleton();
-    }
-    return Singleton.instance;
+    return (Singleton.instance ??= new Singleton());
   }
 
   public doSomething(): void {

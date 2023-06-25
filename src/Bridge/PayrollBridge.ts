@@ -111,9 +111,9 @@ export class MailDisposer extends PaymentDisposer {
 export class Employee {
   constructor(
     public id: string,
-    private scheduler: PaymentScheduler,
-    private calculator: PaymentCalculator,
-    private disposer: PaymentDisposer
+    private readonly scheduler: PaymentScheduler,
+    private readonly calculator: PaymentCalculator,
+    private readonly disposer: PaymentDisposer
   ) {}
 
   public getSchedulerAndBridgeTo(next: PaycheckStation) {
@@ -133,7 +133,7 @@ export class Employee {
 }
 
 export class Payroll {
-  constructor(private employees: Employee[]) {}
+  constructor(private readonly employees: Employee[]) {}
 
   payday(): void {
     for (const employee of this.employees) {

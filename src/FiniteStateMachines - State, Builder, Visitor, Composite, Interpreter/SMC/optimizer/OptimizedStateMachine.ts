@@ -6,17 +6,12 @@ export class OptimizedStateMachine {
   public transitions: Transition[] = [];
 
   public transitionsToString(): string {
-    let result = "";
-    for (const t of this.transitions) {
-      result += t.toString();
-    }
-    return result;
+    return this.transitions.map((t) => t.toString()).join("");
   }
 
   public toString(): string {
-    const searchAllNewLines = /\n/g;
-    let transitionsString = this.transitionsToString().replace(searchAllNewLines, "\n  ");
-    transitionsString = transitionsString.substring(0, transitionsString.length - 2);
+    const matchAllNewLines = /\n/g;
+    const transitionsString = this.transitionsToString().replace(matchAllNewLines, "\n  ").slice(0, -2);
     return `Initial: ${this.header.initial}\nFsm: ${this.header.fsm}\nActions:${this.header.actions}\n{\n  ${transitionsString}}\n`;
   }
 }

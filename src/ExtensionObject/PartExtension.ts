@@ -41,7 +41,7 @@ export interface PartExplosionExtension extends PartExtension {
 export class PiecePartExplosionExtension implements PartExplosionExtension {
   public extensionType = "explosion";
 
-  constructor(private piecePart: PiecePart) {}
+  constructor(private readonly piecePart: PiecePart) {}
 
   createExplosionReport(): string {
     return `Piece explosion report: ${this.piecePart.name}. For part ${this.piecePart.pieceType} at $${this.piecePart.price}`;
@@ -51,7 +51,7 @@ export class PiecePartExplosionExtension implements PartExplosionExtension {
 export class AssemblyExplosionExtension implements PartExplosionExtension {
   public extensionType = "explosion";
 
-  constructor(private assembly: Assembly) {}
+  constructor(private readonly assembly: Assembly) {}
 
   createExplosionReport(): string {
     return `Explosion report for assembly: ${this.assembly.name}.\n${this.getPartsExplosion()}`;
@@ -85,7 +85,7 @@ export interface PartCromulentExtension extends PartExtension {
 
 export class PiecePartCromulentExtension implements PartCromulentExtension {
   public extensionType = "cromulent";
-  constructor(private piecePart: PiecePart) {}
+  constructor(private readonly piecePart: PiecePart) {}
 
   cromulentize(): string {
     return `Cromulent piece named ${this.piecePart.name}`;
@@ -94,7 +94,7 @@ export class PiecePartCromulentExtension implements PartCromulentExtension {
 
 export class AssemblyCromulentExtension implements PartCromulentExtension {
   public extensionType = "cromulent";
-  constructor(private assembly: Assembly) {}
+  constructor(private readonly assembly: Assembly) {}
 
   cromulentize(): string {
     return `Cromulent assembly: ${this.assembly.name}.\n${this.getPartsCromulentized()}`;

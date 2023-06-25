@@ -6,7 +6,7 @@ export class MonostateDictionary {
   /**
    * Using lazy static initialization to fix static initialization order fiasco.
    */
-  private static getState(): Dictionary<string> {
+  private static get state(): Dictionary<string> {
     if (!MonostateDictionary._state) {
       MonostateDictionary._state = {};
     }
@@ -14,10 +14,10 @@ export class MonostateDictionary {
   }
 
   public set(key: string, value: string): void {
-    MonostateDictionary.getState()[key] = value;
+    MonostateDictionary.state[key] = value;
   }
 
   public get(key: string): string | undefined {
-    return MonostateDictionary.getState()[key];
+    return MonostateDictionary.state[key];
   }
 }

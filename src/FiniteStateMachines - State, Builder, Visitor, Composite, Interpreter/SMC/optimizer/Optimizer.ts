@@ -57,9 +57,9 @@ export class Optimizer {
 
 class StateOptimizer {
   constructor(
-    private currentState: SemanticState,
-    private optimizedStateMachine: OptimizedStateMachine,
-    private eventsForThisState: Set<string> = new Set()
+    private readonly currentState: SemanticState,
+    private readonly optimizedStateMachine: OptimizedStateMachine,
+    private readonly eventsForThisState: Set<string> = new Set()
   ) {}
 
   public addTransitionsForState(): void {
@@ -101,9 +101,9 @@ class StateOptimizer {
 
 class SubTransitionOptimizer {
   constructor(
-    private semanticTransition: SemanticTransition,
-    private subTransition: SubTransition,
-    private currentState: SemanticState
+    private readonly semanticTransition: SemanticTransition,
+    private readonly subTransition: SubTransition,
+    private readonly currentState: SemanticState
   ) {}
 
   public optimize(): void {
